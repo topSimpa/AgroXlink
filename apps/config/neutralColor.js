@@ -1,4 +1,5 @@
 const neutral = {
+  background: "#f9fcfb",
   n950: "#1a1c18",
   n900: "#31332f",
   n800: "#484946",
