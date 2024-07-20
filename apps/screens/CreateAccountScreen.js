@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import Brand from "../components/Brand";
+import body from "../config/body";
 import neutral from "../config/colors/neutralColor";
 import Screen from "../components/Screen";
 import primary from "../config/colors/primaryColor";
@@ -10,6 +11,7 @@ import AppTextInput from "../components/AppTextInput";
 import MixedQuestion from "../components/MixedQuestion";
 import EnterButton from "../components/EnterButton";
 import header from "../config/header";
+import CheckBox from "../components/CheckBox";
 
 function CreateAccountScreen() {
   return (
@@ -38,11 +40,14 @@ function CreateAccountScreen() {
             placeholder={"Confirm password"}
             style={{ marginBottom: 16 }}
           />
-          <MixedQuestion
-            first={"Forgot Password?"}
-            second={"Reset it"}
-            style={{ width: "100%" }}
-          />
+          <View style={styles.checkContainer}>
+            <CheckBox />
+            <MixedQuestion
+              first={"You have agreed to our"}
+              second={"Terms & Conditions"}
+              style={{ width: "100%" }}
+            />
+          </View>
           <EnterButton text={"Create Account"} style={styles.signIn} />
           <MixedQuestion
             first={"Already have an account?"}
@@ -56,10 +61,11 @@ function CreateAccountScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: neutral.background,
-    height: "100%",
+  checkContainer: {
     width: "100%",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
 
   formContainer: {
@@ -67,6 +73,22 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: "auto",
     alignItems: "center",
+  },
+
+  screen: {
+    backgroundColor: neutral.background,
+    height: "100%",
+    width: "100%",
+  },
+
+  subTitle: {
+    color: neutral.n60,
+    ...body.p2r,
+  },
+
+  signIn: {
+    marginTop: 32,
+    marginBottom: 20,
   },
 
   titleContainer: {
@@ -79,16 +101,6 @@ const styles = StyleSheet.create({
   title: {
     color: neutral.n950,
     ...header.h3,
-  },
-
-  subTitle: {
-    color: neutral.n60,
-    ...body.p2r
-  },
-
-  signIn: {
-    marginTop: 32,
-    marginBottom: 20,
   },
 });
 export default CreateAccountScreen;
