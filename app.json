@@ -24,9 +24,12 @@
       "favicon": "./apps/assets/favicon.png"
     },
     "plugins": [
-      "expo-font", {
-        "fonts": ["./apps/assets/RedHatText-VariableFont_wgh.ttf"]
-      }
+      [
+
+        "expo-font", {
+          "fonts": ["./apps/assets/fonts/RedHatDisplay.ttf", "./apps/assets/fonts/RedHatText.ttf"]
+        }
+      ]
     ]
   }
 }

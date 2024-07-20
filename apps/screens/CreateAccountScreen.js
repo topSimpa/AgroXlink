@@ -9,6 +9,7 @@ import BackButton from "../components/BackButton";
 import AppTextInput from "../components/AppTextInput";
 import MixedQuestion from "../components/MixedQuestion";
 import EnterButton from "../components/EnterButton";
+import header from "../config/header";
 
 function CreateAccountScreen() {
   return (
@@ -25,7 +26,7 @@ function CreateAccountScreen() {
           </View>
           <AppTextInput
             title={"Email"}
-            placeholder={"Enter your Email Address"}
+            placeholder={"Enter your email address"}
           />
           <AppTextInput
             title={"Password"}
@@ -77,10 +78,12 @@ const styles = StyleSheet.create({
 
   title: {
     color: neutral.n950,
+    ...header.h3,
   },
 
   subTitle: {
     color: neutral.n60,
+    ...body.p2r
   },
 
   signIn: {

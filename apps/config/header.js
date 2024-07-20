@@ -1,9 +1,14 @@
+import { StyleSheet } from "react-native";
+import { PixelRatio } from "react-native";
+
+const pixelfactor = PixelRatio.get();
+
 const head = {
+  fontFamily: "RedHatDisplay",
   fontWeight: "bold",
-  lineHeight: "125%",
 };
 
-const header = {
+const header = StyleSheet.create({
   h1: {
     ...head,
     fontSize: 40,
@@ -24,6 +29,6 @@ const header = {
     ...head,
     fontSize: 14,
   },
-};
+});
 
 export default header;

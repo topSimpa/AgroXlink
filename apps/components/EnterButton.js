@@ -3,11 +3,12 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import primary from "../config/colors/primaryColor";
 import neutral from "../config/colors/neutralColor";
+import label from "../config/label";
 
 function EnterButton({ text, style }) {
   return (
     <TouchableOpacity style={[styles.button, style]}>
-      <Text style={{ color: neutral.white }}>{text}</Text>
+      <Text style={{ color: neutral.white, ...label.l2b }}>{text}</Text>
     </TouchableOpacity>
   );
 }

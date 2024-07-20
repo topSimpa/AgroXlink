@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import neutral from "../config/colors/neutralColor";
+import label from "../config/label";
+import body from "../config/body";
 
 function AppTextInput({ title, placeholder, style }) {
   return (
@@ -25,11 +27,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 12,
     color: neutral.n300,
+    ...body.p2r,
   },
 
   title: {
     marginBottom: 4,
     color: neutral.n950,
+    ...label.l3b
   },
 });
 

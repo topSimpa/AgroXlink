@@ -1,11 +1,12 @@
 import React from "react";
 
 import { StyleSheet, Text, View } from "react-native";
+import header from "../config/header";
 
 function Brand({ color }) {
   return (
     <View style={styles.brandContainer}>
-      <Text style={{ color }}> AgroXlink </Text>
+      <Text style={[{color }, styles.brand]}> AgroXlink </Text>
     </View>
   );
 }
@@ -17,6 +18,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
   },
+
+  brand: {
+    ...header.h4,
+  }
 });
 
 export default Brand;

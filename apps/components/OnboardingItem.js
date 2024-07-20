@@ -14,6 +14,8 @@ import EnterButton from "./EnterButton";
 import MixedQuestion from "./MixedQuestion";
 import Brand from "./Brand";
 import Screen from "./Screen";
+import header from "../config/header";
+import body from "../config/body";
 
 function OnboardingItem({
   id,
@@ -78,6 +80,7 @@ function OnboardingItem({
 const styles = StyleSheet.create({
   caption: {
     color: neutral.n700,
+    ...body.p1r
   },
 
   captionContainer: {
@@ -116,8 +119,7 @@ const styles = StyleSheet.create({
 
   title: {
     color: primary.p900,
-    fontWeight: "bold",
-    fontSize: 32,
+    ...header.h2,
   },
 
   titleContainer: {
