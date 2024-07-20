@@ -1,15 +1,17 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 import neutral from "../config/colors/neutralColor";
 import primary from "../config/colors/primaryColor";
 
-function MixedQuestion({ first, second }) {
+function MixedQuestion({ first, second, style }) {
   return (
-    <Text style={{ color: neutral.n700 }}>
-      {`${first} `}
-      <Text style={{ color: primary.p900 }}>{second}</Text>
-    </Text>
+    <View style={style}>
+      <Text style={{ color: neutral.n700 }}>
+        {`${first} `}
+        <Text style={{ color: primary.p900 }}>{second}</Text>
+      </Text>
+    </View>
   );
 }
 

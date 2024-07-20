@@ -10,7 +10,7 @@ import AppTextInput from "../components/AppTextInput";
 import MixedQuestion from "../components/MixedQuestion";
 import EnterButton from "../components/EnterButton";
 
-function LoginScreen() {
+function CreateAccountScreen() {
   return (
     <View style={styles.screen}>
       <Screen>
@@ -18,8 +18,10 @@ function LoginScreen() {
         <View style={styles.formContainer}>
           <Brand color={primary.p900}></Brand>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Welcome Back!</Text>
-            <Text style={styles.subTitle}>Enter your details to sign in</Text>
+            <Text style={styles.title}>Create Account</Text>
+            <Text style={styles.subTitle}>
+              Enter your details to create an account
+            </Text>
           </View>
           <AppTextInput
             title={"Email"}
@@ -27,23 +29,28 @@ function LoginScreen() {
           />
           <AppTextInput
             title={"Password"}
-            placeholder={"Enter your password"}
+            placeholder={"Choose password"}
             style={{ marginTop: 16, marginBottom: 16 }}
+          />
+          <AppTextInput
+            title={"Confirm Password"}
+            placeholder={"Confirm password"}
+            style={{ marginBottom: 16 }}
           />
           <MixedQuestion
             first={"Forgot Password?"}
             second={"Reset it"}
             style={{ width: "100%" }}
           />
-          <EnterButton text={"Sign In"} style={styles.signIn} />
+          <EnterButton text={"Create Account"} style={styles.signIn} />
           <MixedQuestion
-            first={"Don't have an account?"}
-            second={"Create One"}
+            first={"Already have an account?"}
+            second={"Sign In"}
             style={{ width: "100%", alignItems: "center" }}
           />
         </View>
       </Screen>
-    </View>                                                       
+    </View>
   );
 }
 
@@ -81,4 +88,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-export default LoginScreen;
+export default CreateAccountScreen;

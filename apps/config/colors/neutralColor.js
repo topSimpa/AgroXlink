@@ -10,6 +10,7 @@ const neutral = {
   n300: "#babbba",
   n200: "#d1d2d1",
   n100: "#e8e8e8",
+  n60: "#666666",
   white: "#ffff",
 };
 
