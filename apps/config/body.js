@@ -42,7 +42,7 @@ const body = StyleSheet.create({
   p3b: {
     ...p3,
     fontFamily,
-    fontWeight: "semi-bold",
+    fontWeight: "bold",
   },
 });
 

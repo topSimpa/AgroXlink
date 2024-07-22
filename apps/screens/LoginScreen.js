@@ -16,9 +16,13 @@ function LoginScreen() {
   return (
     <View style={styles.screen}>
       <Screen>
-        <BackButton />
+        <View style={styles.backContainer}>
+          <BackButton />
+        </View>
         <View style={styles.formContainer}>
-          <Brand color={primary.p900}></Brand>
+          <View style={styles.brandContainer}>
+            <Brand color={primary.p900}></Brand>
+          </View>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Welcome Back!</Text>
             <Text style={styles.subTitle}>Enter your details to sign in</Text>
@@ -50,10 +54,18 @@ function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: neutral.background,
-    height: "100%",
+  backContainer: {
+    marginTop: 0,
+    paddingLeft: 16,
+    justifyContent: "center",
     width: "100%",
+    height: 56,
+  },
+
+  brandContainer: {
+    paddingVertical: 18,
+    width: '100%',
+    alignItems: 'center'
   },
 
   formContainer: {
@@ -61,6 +73,22 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: "auto",
     alignItems: "center",
+  },
+
+  subTitle: {
+    color: neutral.n60,
+    ...body.p2r,
+  },
+
+  signIn: {
+    marginTop: 32,
+    marginBottom: 20,
+  },
+
+  screen: {
+    backgroundColor: neutral.background,
+    height: "100%",
+    width: "100%",
   },
 
   titleContainer: {
@@ -73,16 +101,6 @@ const styles = StyleSheet.create({
   title: {
     color: neutral.n950,
     ...header.h3,
-  },
-
-  subTitle: {
-    color: neutral.n60,
-    ...body.p2r
-  },
-
-  signIn: {
-    marginTop: 32,
-    marginBottom: 20,
   },
 });
 export default LoginScreen;

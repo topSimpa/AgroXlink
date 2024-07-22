@@ -1,27 +1,10 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+
+import neutral from "../config/colors/neutralColor";
 
 function BackButton() {
-  return (
-    <View style={styles.arrowContainer}>
-      <Image
-        style={styles.arrow}
-        source={require("../assets/left-arrow.png")}
-      />
-    </View>
-  );
+  return <FontAwesome6 name="arrow-left-long" size={24} color={neutral.n950} />;
 }
 
-const styles = StyleSheet.create({
-  arrowContainer: {
-    width: "100%",
-    height: 56,
-    justifyContent: "center",
-    paddingLeft: 16,
-  },
-  arrow: {
-    height: 24,
-    width: 24,
-  },
-});
 export default BackButton;

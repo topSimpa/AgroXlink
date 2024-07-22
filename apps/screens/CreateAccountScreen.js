@@ -17,9 +17,13 @@ function CreateAccountScreen() {
   return (
     <View style={styles.screen}>
       <Screen>
-        <BackButton />
+        <View style={styles.backContainer}>
+          <BackButton />
+        </View>
         <View style={styles.formContainer}>
-          <Brand color={primary.p900}></Brand>
+          <View style={styles.brandContainer}>
+            <Brand color={primary.p900}></Brand>
+          </View>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Create Account</Text>
             <Text style={styles.subTitle}>
@@ -61,6 +65,20 @@ function CreateAccountScreen() {
 }
 
 const styles = StyleSheet.create({
+  backContainer: {
+    marginTop: 0,
+    paddingLeft: 16,
+    justifyContent: "center",
+    width: "100%",
+    height: 56,
+  },
+
+  brandContainer: {
+    paddingVertical: 18,
+    width: "100%",
+    alignItems: "center",
+  },
+
   checkContainer: {
     width: "100%",
     alignItems: "center",

@@ -30,7 +30,9 @@ function OnboardingItem({
   return (
     <ImageBackground source={image} style={[styles.imageBackground, { width }]}>
       <Screen style={styles.screen}>
-        <Brand color={neutral.white} />
+        <View>
+          <Brand color={neutral.white} />
+        </View>
 
         <View style={styles.container}>
           <View style={styles.titleContainer}>
@@ -80,7 +82,7 @@ function OnboardingItem({
 const styles = StyleSheet.create({
   caption: {
     color: neutral.n700,
-    ...body.p1r
+    ...body.p1r,
   },
 
   captionContainer: {

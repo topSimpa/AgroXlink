@@ -50,7 +50,7 @@ function OnboardingScreen() {
       pagingEnabled
       bounces={false}
       style={styles.flatList}
-    ></FlatList>
+    />
   );
 }
 
