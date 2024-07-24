@@ -4,37 +4,40 @@ import neutral from "../config/colors/neutralColor";
 import label from "../config/label";
 import body from "../config/body";
 
-function AppTextInput({ title, placeholder, style }) {
-  return (
-    <View style={[styles.container, style]}>
-      <Text style={styles.title}>{title}</Text>
-      <TextInput placeholder={placeholder} style={styles.input} />
-    </View>
-  );
+function AppTextInput({ title, placeholder, style, ...otherProps }) {
+	return (
+		<View style={[styles.container, style]}>
+			<TextInput
+				placeholder={placeholder}
+				style={styles.input}
+				{...otherProps}
+			/>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: 66,
-  },
-  input: {
-    width: "100%",
-    height: 48,
-    borderRadius: 10,
-    borderColor: neutral.n100,
-    borderStyle: "solid",
-    borderWidth: 1,
-    padding: 12,
-    color: neutral.n300,
-    ...body.p2r,
-  },
+	container: {
+		width: "100%",
+		height: 66,
+	},
+	input: {
+		width: "100%",
+		height: 48,
+		borderRadius: 10,
+		borderColor: neutral.n100,
+		borderStyle: "solid",
+		borderWidth: 1,
+		padding: 12,
+		color: neutral.n300,
+		...body.p2r,
+	},
 
-  title: {
-    marginBottom: 4,
-    color: neutral.n950,
-    ...label.l3b
-  },
+	title: {
+		marginBottom: 4,
+		color: neutral.n950,
+		...label.l3b,
+	},
 });
 
 export default AppTextInput;
