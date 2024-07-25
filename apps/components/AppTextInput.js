@@ -4,11 +4,11 @@ import neutral from "../config/colors/neutralColor";
 import label from "../config/label";
 import body from "../config/body";
 
-function AppTextInput({ title, placeholder, style }) {
+function AppTextInput({ title, style, ...otherProps}) {
   return (
     <View style={[styles.container, style]}>
       <Text style={styles.title}>{title}</Text>
-      <TextInput placeholder={placeholder} style={styles.input} />
+      <TextInput {...otherProps} style={styles.input} />
     </View>
   );
 }

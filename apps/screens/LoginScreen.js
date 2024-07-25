@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import Brand from "../components/Brand";
 import neutral from "../config/colors/neutralColor";
@@ -11,6 +13,12 @@ import MixedQuestion from "../components/MixedQuestion";
 import EnterButton from "../components/EnterButton";
 import header from "../config/header";
 import body from "../config/body";
+import label from "../config/label";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+  password: Yup.string().required().min(6).matches().label("Password"),
+});
 
 function LoginScreen() {
   return (
@@ -27,26 +35,51 @@ function LoginScreen() {
             <Text style={styles.title}>Welcome Back!</Text>
             <Text style={styles.subTitle}>Enter your details to sign in</Text>
           </View>
-          <AppTextInput
-            title={"Email"}
-            placeholder={"Enter your email address"}
-          />
-          <AppTextInput
-            title={"Password"}
-            placeholder={"Enter your password"}
-            style={{ marginTop: 16, marginBottom: 16 }}
-          />
-          <MixedQuestion
-            first={"Forgot Password?"}
-            second={"Reset it"}
-            style={{ width: "100%" }}
-          />
-          <EnterButton text={"Sign In"} style={styles.signIn} />
-          <MixedQuestion
-            first={"Don't have an account?"}
-            second={"Create One"}
-            style={{ width: "100%", alignItems: "center" }}
-          />
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            onSubmit={() => console.log("your database in here")}
+            validationSchema={validationSchema}
+          >
+            {({ handleChange, handleSubmit, errors, values, touched }) => (
+              <>
+                <AppTextInput
+                  title={"Email"}
+                  placeholder={"Enter your email address"}
+                  onChangeText={handleChange("email")}
+                  value={values.email}
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.errorStyle}>{errors.email}</Text>
+                )}
+                <AppTextInput
+                  title={"Password"}
+                  placeholder={"Enter your password"}
+                  style={{ marginTop: 16 }}
+                  onChangeText={handleChange("password")}
+                  value={values.password}
+                />
+                {touched.password && errors.password && (
+                  <Text style={styles.errorStyle}>{errors.password}</Text>
+                )}
+                <MixedQuestion
+                  first={"Forgot Password?"}
+                  second={"Reset it"}
+                  style={{ marginTop: 16 }}
+                />
+                <View style={styles.signInContainer}>
+                  <EnterButton
+                    text={"Sign In"}
+                    style={styles.signIn}
+                    onPress={handleSubmit}
+                  />
+                  <MixedQuestion
+                    first={"Don't have an account?"}
+                    second={"Create One"}
+                  />
+                </View>
+              </>
+            )}
+          </Formik>
         </View>
       </Screen>
     </View>
@@ -64,15 +97,21 @@ const styles = StyleSheet.create({
 
   brandContainer: {
     paddingVertical: 18,
-    width: '100%',
-    alignItems: 'center'
+    width: "100%",
+    alignItems: "center",
+  },
+
+  errorStyle: {
+    color: "red",
+    width: "100%",
+    marginTop: 5,
+    ...label.l3r,
   },
 
   formContainer: {
     width: "92%",
     alignSelf: "center",
     height: "auto",
-    alignItems: "center",
   },
 
   subTitle: {
@@ -80,8 +119,12 @@ const styles = StyleSheet.create({
     ...body.p2r,
   },
 
-  signIn: {
+  signInContainer: {
     marginTop: 32,
+    alignItems: "center",
+  },
+
+  signIn: {
     marginBottom: 20,
   },
 

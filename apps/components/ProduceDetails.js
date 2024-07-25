@@ -1,14 +1,12 @@
 import React from "react";
 import {
-  Image,
   ImageBackground,
   StyleSheet,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 import { useState } from "react";
@@ -18,7 +16,7 @@ import neutral from "../config/colors/neutralColor";
 import body from "../config/body";
 import header from "../config/header";
 
-function ProduceDetails() {
+function ProduceDetails({ image, name, farmName, price, unit }) {
   const [isSaved, setSaved] = useState(false);
   const [isEntered, setEntered] = useState(false);
   const handleClicked = () => setSaved(!isSaved);
@@ -27,7 +25,7 @@ function ProduceDetails() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/tomatoes.png")}
+        source={image}
         resizeMode="cover"
         style={{ width: "100%", height: 140, overflow: "hidden" }}
       >
@@ -36,28 +34,28 @@ function ProduceDetails() {
             style={[
               styles.iconContainer,
               {
-                backgroundColor: isSaved ? primary.p300 : neutral.white,
+                backgroundColor: neutral.white,
                 width: 35,
               },
             ]}
           >
-            <Feather name="bookmark" size={24} color={primary.p900} />
+            <FontAwesome name={isSaved ? "bookmark" : "bookmark-o"} size={24} color={primary.p900} />
           </View>
         </TouchableOpacity>
       </ImageBackground>
 
       <View style={styles.details}>
         <View style={styles.nameContainer}>
-          <Text style={[styles.name, styles.text]}>Rice</Text>
-          <Text style={[styles.farm, styles.text]}>Zango</Text>
+          <Text style={[styles.name, styles.text]}>{name}</Text>
+          <Text style={[styles.farm, styles.text]}>{farmName}</Text>
         </View>
         <View style={styles.others}>
           <View style={styles.priceContainer}>
             <Text style={[styles.text, styles.price]}>
               <FontAwesome6 name="naira-sign" size={16} color={neutral.n950} />
-              999
+              {price}
             </Text>
-            <Text style={[styles.text, styles.quantity]}>Per Bag</Text>
+            <Text style={[styles.text, styles.quantity]}>{unit}</Text>
           </View>
           <TouchableOpacity onPress={handleEnter} style={styles.save}>
             <View
@@ -78,11 +76,13 @@ function ProduceDetails() {
 
 const styles = StyleSheet.create({
   container: {
-    width: 164,
+    width: "47%",
     borderStyle: "solid",
     borderWidth: 2,
     borderRadius: 5,
     borderColor: neutral.n300,
+    marginRight: 8,
+    marginBottom: 16,
   },
 
   iconContainer: {

@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import Brand from "../components/Brand";
 import body from "../config/body";
@@ -12,6 +14,22 @@ import MixedQuestion from "../components/MixedQuestion";
 import EnterButton from "../components/EnterButton";
 import header from "../config/header";
 import CheckBox from "../components/CheckBox";
+import label from "../config/label";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(6, "Password must be at least 8 characters")
+    .matches(),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
+  agreeToTerms: Yup.boolean().oneOf(
+    [true],
+    "You must accept the terms and conditions"
+  ),
+});
 
 function CreateAccountScreen() {
   return (
@@ -30,34 +48,87 @@ function CreateAccountScreen() {
               Enter your details to create an account
             </Text>
           </View>
-          <AppTextInput
-            title={"Email"}
-            placeholder={"Enter your email address"}
-          />
-          <AppTextInput
-            title={"Password"}
-            placeholder={"Choose password"}
-            style={{ marginTop: 16, marginBottom: 16 }}
-          />
-          <AppTextInput
-            title={"Confirm Password"}
-            placeholder={"Confirm password"}
-            style={{ marginBottom: 16 }}
-          />
-          <View style={styles.checkContainer}>
-            <CheckBox />
-            <MixedQuestion
-              first={"You have agreed to our"}
-              second={"Terms & Conditions"}
-              style={{ width: "100%" }}
-            />
-          </View>
-          <EnterButton text={"Create Account"} style={styles.signIn} />
-          <MixedQuestion
-            first={"Already have an account?"}
-            second={"Sign In"}
-            style={{ width: "100%", alignItems: "center" }}
-          />
+
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+              confirmPassword: "",
+              agreeToTerms: false,
+            }}
+            onSubmit={() => console.log("your database in here")}
+            validationSchema={validationSchema}
+          >
+            {({
+              handleChange,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              setFieldValue,
+            }) => (
+              <>
+                <AppTextInput
+                  title={"Email"}
+                  placeholder={"Enter your email address"}
+                  onChangeText={handleChange("email")}
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.errorStyle}>{errors.email}</Text>
+                )}
+                <AppTextInput
+                  title={"Password"}
+                  placeholder={"Choose password"}
+                  style={{ marginTop: 16 }}
+                  onChangeText={handleChange("password")}
+                  value={values.password}
+                  secureTextEntry
+                />
+                {touched.password && errors.password && (
+                  <Text style={styles.errorStyle}>{errors.password}</Text>
+                )}
+                <AppTextInput
+                  title={"Confirm Password"}
+                  placeholder={"Confirm password"}
+                  style={{ marginTop: 16 }}
+                  onChangeText={handleChange("confirmPassword")}
+                  value={values.confirmPassword}
+                  secureTextEntry
+                />
+                {touched.password && errors.confirmPassword && (
+                  <Text style={styles.errorStyle}>
+                    {errors.confirmPassword}
+                  </Text>
+                )}
+                <View style={styles.checkContainer}>
+                  <CheckBox
+                    value={values.agreeToTerms}
+                    onValueChange={(value) =>
+                      setFieldValue("agreeToTerms", value)
+                    }
+                  />
+                  <MixedQuestion
+                    first={"You have agreed to our"}
+                    second={"Terms & Conditions"}
+                  />
+                </View>
+                {touched.agreeToTerms && errors.agreeToTerms && (
+                  <Text style={styles.errorStyle}>{errors.agreeToTerms}</Text>
+                )}
+                <View style={styles.signInContainer}>
+                  <EnterButton
+                    text={"Create Account"}
+                    style={styles.signIn}
+                    onPress={handleSubmit}
+                  />
+                  <MixedQuestion
+                    first={"Already have an account?"}
+                    second={"Sign In"}
+                  />
+                </View>
+              </>
+            )}
+          </Formik>
         </View>
       </Screen>
     </View>
@@ -84,6 +155,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "flex-start",
+    marginTop: 16,
+  },
+
+  errorStyle: {
+    color: "red",
+    width: "100%",
+    marginTop: 5,
+    ...label.l3r,
   },
 
   formContainer: {
@@ -107,6 +186,11 @@ const styles = StyleSheet.create({
   signIn: {
     marginTop: 32,
     marginBottom: 20,
+  },
+
+  signInContainer: {
+    width: "100%",
+    alignItems: "center",
   },
 
   titleContainer: {

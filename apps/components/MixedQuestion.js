@@ -8,7 +8,7 @@ import label from "../config/label";
 
 function MixedQuestion({ first, second, style }) {
   return (
-    <Text style={{ color: neutral.n700, ...body.p2r }}>
+    <Text style={[{ color: neutral.n700, ...body.p2r,}, style]}>
       {`${first} `}
       <Text style={{ color: primary.p950, ...label.l3b }}>{second}</Text>
     </Text>

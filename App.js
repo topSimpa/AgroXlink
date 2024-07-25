@@ -9,6 +9,7 @@ import CatItem from "./apps/components/CatItem";
 import ProduceDetails from "./apps/components/ProduceDetails";
 import Screen from "./apps/components/Screen";
 import MarketScreen from "./apps/screens/MarketScreen";
+import CommunityScreen from "./apps/screens/CommunityScreen";
 
 export default function App() {
   const fontsLoaded = useCustomFonts();
@@ -17,7 +18,7 @@ export default function App() {
     return null; // You can show a loading screen here if you prefer
   }
 
-  return <MarketScreen/>;
+  return <LoginScreen />;
 }
 
 const styles = StyleSheet.create({

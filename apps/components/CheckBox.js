@@ -3,17 +3,14 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import primary from "../config/colors/primaryColor";
 import { TouchableWithoutFeedback, View } from "react-native";
 
-function CheckBox({ children }) {
-  const [isChecked, setCheck] = useState(false);
-  const handleCheckBox = () => setCheck(!isChecked);
-
+function CheckBox({ value, onValueChange }) {
   return (
-    <TouchableWithoutFeedback onPress={handleCheckBox}>
-        <MaterialCommunityIcons
-          name={isChecked ? "checkbox-outline" : "checkbox-blank-outline"}
-          size={24}
-          color={primary.p950}
-        />
+    <TouchableWithoutFeedback onPress={() => onValueChange(!value)}>
+      <MaterialCommunityIcons
+        name={value ? "checkbox-outline" : "checkbox-blank-outline"}
+        size={24}
+        color={primary.p950}
+      />
     </TouchableWithoutFeedback>
   );
 }

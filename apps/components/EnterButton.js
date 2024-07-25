@@ -5,9 +5,9 @@ import primary from "../config/colors/primaryColor";
 import neutral from "../config/colors/neutralColor";
 import label from "../config/label";
 
-function EnterButton({ text, style }) {
+function EnterButton({ text, style, ...otherProps }) {
   return (
-    <TouchableOpacity style={[styles.button, style]}>
+    <TouchableOpacity style={[styles.button, style]} {...otherProps}>
       <Text style={{ color: neutral.white, ...label.l2b }}>{text}</Text>
     </TouchableOpacity>
   );
