@@ -18,7 +18,7 @@ export default function App() {
     return null; // You can show a loading screen here if you prefer
   }
 
-  return <LoginScreen />;
+  return <OnboardingScreen/>;
 }
 
 const styles = StyleSheet.create({
