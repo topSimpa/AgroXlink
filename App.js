@@ -43,7 +43,17 @@ export default function App() {
   if (!isReady || !fontsLoaded) {
     return null; // You can show a loading screen here if you prefer
   }
+  if (!isReady || !fontsLoaded) {
+    return null; // You can show a loading screen here if you prefer
+  }
 
+  // return (
+  // 	<AuthProvider>
+  // 		<NavigationContainer>
+  // 			{user ? <CommunityScreen /> : <AuthNavigator />}
+  // 		</NavigationContainer>
+  // 	</AuthProvider>
+  // );
   return (
     <MarketScreen />
     // <AuthProvider>
