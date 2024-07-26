@@ -1,31 +1,64 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { NavigationContainer } from "@react-navigation/native";
 
-import OnboardingScreen from "./apps/screens/OnboardingScreen";
-import LoginScreen from "./apps/screens/LoginScreen";
-import CreateAccountScreen from "./apps/screens/CreateAccountScreen";
 import useCustomFonts from "./apps/config/useFonts";
-import CatItem from "./apps/components/CatItem";
-import ProduceDetails from "./apps/components/ProduceDetails";
-import Screen from "./apps/components/Screen";
+import { AuthProvider } from "./apps/auth/context";
+import AuthNavigator from "./apps/navigation/AuthNavigator";
+import { auth } from "./apps/firebaseSetup";
 import MarketScreen from "./apps/screens/MarketScreen";
 import CommunityScreen from "./apps/screens/CommunityScreen";
 
 export default function App() {
-  const fontsLoaded = useCustomFonts();
+	const fontsLoaded = useCustomFonts();
+	const [user, setUser] = useState(null);
+	const [isReady, setIsReady] = useState(false);
 
-  if (!fontsLoaded) {
-    return null; // You can show a loading screen here if you prefer
-  }
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setUser(user);
+			setIsReady(true);
+		});
+		return unsubscribe;
+	}, []);
 
-  return <OnboardingScreen/>;
-}
+	const handleLogout = async () => {
+		try {
+			await signOut(auth);
+			console.log("User logged out successfully");
+		} catch (error) {
+			console.error("Error logging out:", error);
+		}
+	};
+
+	// Temporary trigger to log out the user (for testing purposes)
+	// useEffect(() => {
+	// 	// Call the logout function here
+	// 	if (user) {
+	// 		handleLogout();
+	// 	}
+	// }, [user]);
+
+	if (!isReady || !fontsLoaded) {
+		return null; // You can show a loading screen here if you prefer
+	}
+
+	return (
+		<AuthProvider>
+			<NavigationContainer>
+				{user ? <MarketScreen /> : <AuthNavigator />}
+			</NavigationContainer>
+		</AuthProvider>
+	);
+
+return <OnboardingScreen/>;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+		alignItems: "center",
+		justifyContent: "center",
+	},
 });
