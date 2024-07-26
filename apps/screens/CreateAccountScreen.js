@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Yup from "yup";
 
@@ -14,6 +14,7 @@ import EnterButton from "../components/Button";
 import header from "../config/header";
 import CheckBox from "../components/CheckBox";
 import useAuth from "../auth/useAuth";
+import ActivityIndicator from "../components/ActivityIndicator";
 
 import {
 	ErrorMessage,
@@ -35,31 +36,32 @@ const validationSchema = Yup.object().shape({
 	),
 });
 
-function CreateAccountScreen() {
+function CreateAccountScreen({ navigation }) {
 	const { register, login } = useAuth();
 	const [error, setError] = useState();
+	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async (userInfo) => {
 		try {
 			// Register the user
+			setLoading(true);
 			const userCredential = await register(userInfo.email, userInfo.password);
 
-			// Log the user in
-			const { user } = await login(userInfo.email, userInfo.password);
-
-			console.log("User registered and logged in:", user);
+			// navigation.navigate("Login");
 		} catch (error) {
 			// Handle registration or login error
 			// setError(error);
+			setLoading(false);
 			console.error(error);
 		}
 	};
 
 	return (
-		<View style={styles.screen}>
-			<Screen>
+		<>
+			<ActivityIndicator visible={loading} />
+			<Screen style={styles.screen}>
 				<View style={styles.backContainer}>
-					<BackButton />
+					<BackButton onPress={() => navigation.goBack()} />
 				</View>
 				<View style={styles.formContainer}>
 					<View style={styles.brandContainer}>
@@ -71,7 +73,6 @@ function CreateAccountScreen() {
 							Enter your details to create an account
 						</Text>
 					</View>
-
 					<Form
 						initialValues={{
 							email: "",
@@ -124,10 +125,11 @@ function CreateAccountScreen() {
 						first={"Already have an account?"}
 						second={"Sign In"}
 						style={{ width: "100%", alignItems: "center" }}
+						onPress={() => navigation.navigate("Login")}
 					/>
 				</View>
 			</Screen>
-		</View>
+		</>
 	);
 }
 
@@ -162,8 +164,7 @@ const styles = StyleSheet.create({
 
 	screen: {
 		backgroundColor: neutral.background,
-		height: "100%",
-		width: "100%",
+		padding: 10,
 	},
 
 	subTitle: {

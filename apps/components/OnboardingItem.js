@@ -75,6 +75,7 @@ function OnboardingItem({
 						<MixedQuestion
 							first={"Already have an account?"}
 							second={"Sign In"}
+							onPress={() => navigation.navigate("Login")}
 						/>
 					</View>
 				</View>

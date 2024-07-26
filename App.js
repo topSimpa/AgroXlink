@@ -1,79 +1,52 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import * as Yup from "yup";
-import {
-	ErrorMessage,
-	Form,
-	FormField,
-	SubmitButton,
-} from "./apps/components/forms";
-import useCustomFonts from "./apps/config/useFonts";
-import { AuthProvider } from "./apps/auth/context";
-import useAuth from "./apps/auth/useAuth";
-import AuthNavigator from "./apps/navigation/AuthNavigator";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { NavigationContainer } from "@react-navigation/native";
 
-const validationSchema = Yup.object().shape({
-	email: Yup.string().required().email().label("Email"),
-	password: Yup.string().required().min(4).label("Password"),
-});
-
-const RegisterForm = () => {
-	const { register, login } = useAuth();
-
-	const handleSubmit = async (userInfo) => {
-		try {
-			// Register the user
-			const userCredential = await register(userInfo.email, userInfo.password);
-
-			// Log the user in
-			const { user } = await login(userInfo.email, userInfo.password);
-
-			console.log("User registered and logged in:", user);
-		} catch (error) {
-			// Handle registration or login error
-			console.error(error);
-		}
-	};
-
-	return (
-		<Form
-			initialValues={{ email: "", password: "" }}
-			onSubmit={handleSubmit}
-			validationSchema={validationSchema}
-		>
-			<FormField
-				autoCorrect={false}
-				name="email"
-				keyboardType="email-address"
-				placeholder="Email"
-				textContentType="emailAddress"
-			/>
-			<FormField
-				autoCapitalize="none"
-				autoCorrect={false}
-				name="password"
-				placeholder="Password"
-				secureTextEntry
-				textContentType="password"
-			/>
-			<SubmitButton title="Register" />
-		</Form>
-	);
-};
+import useCustomFonts from "./apps/config/useFonts";
+import { AuthProvider } from "./apps/auth/context";
+import AuthNavigator from "./apps/navigation/AuthNavigator";
+import { auth } from "./apps/firebaseSetup";
+import MarketScreen from "./apps/screens/MarketScreen";
 
 export default function App() {
 	const fontsLoaded = useCustomFonts();
+	const [user, setUser] = useState(null);
+	const [isReady, setIsReady] = useState(false);
 
-	if (!fontsLoaded) {
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setUser(user);
+			setIsReady(true);
+		});
+		return unsubscribe;
+	}, []);
+
+	const handleLogout = async () => {
+		try {
+			await signOut(auth);
+			console.log("User logged out successfully");
+		} catch (error) {
+			console.error("Error logging out:", error);
+		}
+	};
+
+	// Temporary trigger to log out the user (for testing purposes)
+	useEffect(() => {
+		// Call the logout function here
+		if (user) {
+			handleLogout();
+		}
+	}, [user]);
+
+	if (!isReady || !fontsLoaded) {
 		return null; // You can show a loading screen here if you prefer
 	}
 
 	return (
 		<AuthProvider>
 			<NavigationContainer>
-				<AuthNavigator />
+				{user ? <MarketScreen /> : <AuthNavigator />}
 			</NavigationContainer>
 		</AuthProvider>
 	);

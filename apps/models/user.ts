@@ -23,4 +23,5 @@ export interface User {
 	imageUrl?: string;
 	dateCreated?: Timestamp;
 	dateUpdated?: Timestamp;
+	onboardingCompleted?: boolean;
 }

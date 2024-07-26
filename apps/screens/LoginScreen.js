@@ -11,6 +11,7 @@ import BackButton from "../components/BackButton";
 import MixedQuestion from "../components/MixedQuestion";
 import header from "../config/header";
 import useAuth from "../auth/useAuth";
+import ActivityIndicator from "../components/ActivityIndicator";
 
 import {
 	ErrorMessage,
@@ -28,17 +29,21 @@ const resetPasswordValidationSchema = Yup.object().shape({
 	resetEmail: Yup.string().required().email().label("Email"),
 });
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
 	const { login, resetPassword } = useAuth();
 	const [error, setError] = useState();
 	const [modalVisible, setModalVisible] = useState(false);
 	const [resetError, setResetError] = useState();
 	const [resetSuccess, setResetSuccess] = useState();
+	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async (userInfo) => {
 		try {
+			setLoading(true);
 			const { user } = await login(userInfo.email, userInfo.password);
 			console.log("User logged in:", user);
+
+			setLoading(false);
 			setError(null);
 		} catch (error) {
 			setError(error.message);
@@ -58,10 +63,11 @@ function LoginScreen() {
 	};
 
 	return (
-		<View style={styles.screen}>
-			<Screen>
+		<>
+			<ActivityIndicator visible={loading} />
+			<Screen style={styles.screen}>
 				<View style={styles.backContainer}>
-					<BackButton />
+					<BackButton onPress={() => navigation.goBack()} />
 				</View>
 				<View style={styles.formContainer}>
 					<View style={styles.brandContainer}>
@@ -69,7 +75,7 @@ function LoginScreen() {
 					</View>
 					<View style={styles.titleContainer}>
 						<Text style={styles.title}>Welcome Back!</Text>
-						<Text style={styles.subTitle}>Enter your details to sign in</Text>
+						<Text style={styles.subTitle}>Enter your detaails to sign in</Text>
 					</View>
 
 					<Form
@@ -110,6 +116,7 @@ function LoginScreen() {
 						first={"Don't have an account?"}
 						second={"Create One"}
 						style={{ width: "100%", alignItems: "center" }}
+						onPress={() => navigation.navigate("Register")}
 					/>
 				</View>
 
@@ -153,7 +160,7 @@ function LoginScreen() {
 					</View>
 				</Modal>
 			</Screen>
-		</View>
+		</>
 	);
 }
 
@@ -186,8 +193,7 @@ const styles = StyleSheet.create({
 
 	screen: {
 		backgroundColor: neutral.background,
-		height: "100%",
-		width: "100%",
+		padding: 10,
 	},
 
 	titleContainer: {
