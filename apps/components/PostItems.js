@@ -8,7 +8,7 @@ import primary from "../config/colors/primaryColor";
 import Like from "../assets/like.svg";
 import Save from "../assets/save.svg";
 import Share from "../assets/share.svg";
-import Comment from "../assets/comment";
+import Comment from "../assets/comment.svg";
 import label from "../config/label";
 
 function PostItems({ profilePics, image, text, owner, time }) {
