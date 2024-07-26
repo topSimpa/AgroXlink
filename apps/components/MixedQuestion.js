@@ -8,28 +8,21 @@ import label from "../config/label";
 
 function MixedQuestion({ first, second, style, onPress }) {
 	return (
-		<View style={[styles.container, style]}>
-			<Text style={styles.firstText}>{first} </Text>
+		<View style={styles.textContainer}>
+			<Text style={[{ color: neutral.n700, ...body.p2r }, style]}>
+				{`${first} `}
+			</Text>
 			<TouchableOpacity onPress={onPress}>
-				<Text style={styles.secondText}>{second}</Text>
+				<Text style={{ color: primary.p950, ...label.l3b }}>{second}</Text>
 			</TouchableOpacity>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
+	textContainer: {
 		flexDirection: "row",
-		alignItems: "center",
-	},
-	firstText: {
-		color: neutral.n700,
-		...body.p2r,
-	},
-	secondText: {
-		color: primary.p950,
-		...label.l3b,
+		justifyContent: "center",
 	},
 });
-
 export default MixedQuestion;

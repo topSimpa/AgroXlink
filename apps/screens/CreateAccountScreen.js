@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 import Brand from "../components/Brand";
@@ -10,27 +11,24 @@ import primary from "../config/colors/primaryColor";
 import BackButton from "../components/BackButton";
 import AppTextInput from "../components/AppTextInput";
 import MixedQuestion from "../components/MixedQuestion";
-import EnterButton from "../components/Button";
+import EnterButton from "../components/EnterButton";
 import header from "../config/header";
 import CheckBox from "../components/CheckBox";
-import useAuth from "../auth/useAuth";
+import label from "../config/label";
 import ActivityIndicator from "../components/ActivityIndicator";
 
-import {
-	ErrorMessage,
-	Form,
-	FormField,
-	SubmitButton,
-	FormCheckbox,
-} from "../components/forms";
+import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
 	email: Yup.string().required().email().label("Email"),
-	password: Yup.string().required().min(4).label("Password"),
+	password: Yup.string()
+		.required("Password is required")
+		.min(6, "Password must be at least 8 characters")
+		.matches(),
 	confirmPassword: Yup.string()
 		.oneOf([Yup.ref("password"), null], "Passwords must match")
 		.required("Confirm Password is required"),
-	agreed: Yup.boolean().oneOf(
+	agreeToTerms: Yup.boolean().oneOf(
 		[true],
 		"You must accept the terms and conditions"
 	),
@@ -47,7 +45,8 @@ function CreateAccountScreen({ navigation }) {
 			setLoading(true);
 			const userCredential = await register(userInfo.email, userInfo.password);
 
-			// navigation.navigate("Login");
+			navigation.navigate("Login");
+      
 		} catch (error) {
 			// Handle registration or login error
 			// setError(error);
@@ -57,9 +56,9 @@ function CreateAccountScreen({ navigation }) {
 	};
 
 	return (
-		<>
+		<View style={styles.screen}>
 			<ActivityIndicator visible={loading} />
-			<Screen style={styles.screen}>
+			<Screen>
 				<View style={styles.backContainer}>
 					<BackButton onPress={() => navigation.goBack()} />
 				</View>
@@ -73,63 +72,91 @@ function CreateAccountScreen({ navigation }) {
 							Enter your details to create an account
 						</Text>
 					</View>
-					<Form
+
+					<Formik
 						initialValues={{
 							email: "",
 							password: "",
 							confirmPassword: "",
-							agreed: false,
+							agreeToTerms: false,
 						}}
 						onSubmit={handleSubmit}
 						validationSchema={validationSchema}
 					>
-						<ErrorMessage error={error} visible={error} />
-						<FormField
-							title="Email"
-							autoCorrect={false}
-							name="email"
-							keyboardType="email-address"
-							placeholder="Email"
-							textContentType="emailAddress"
-						/>
-						<FormField
-							title="Password"
-							autoCapitalize="none"
-							autoCorrect={false}
-							name="password"
-							placeholder="Password"
-							secureTextEntry
-							textContentType="password"
-						/>
-
-						<FormField
-							title="Confirm Password"
-							autoCapitalize="none"
-							autoCorrect={false}
-							name="confirmPassword"
-							placeholder="Confirm Password"
-							secureTextEntry
-							textContentType="password"
-						/>
-
-						<View style={styles.checkContainer}>
-							<FormCheckbox
-								title="I agree to the Terms & Conditions"
-								name="agreed"
-							/>
-						</View>
-
-						<SubmitButton title="Create an account" />
-					</Form>
-					<MixedQuestion
-						first={"Already have an account?"}
-						second={"Sign In"}
-						style={{ width: "100%", alignItems: "center" }}
-						onPress={() => navigation.navigate("Login")}
-					/>
+						{({
+							handleChange,
+							handleSubmit,
+							values,
+							errors,
+							touched,
+							setFieldValue,
+						}) => (
+							<>
+								<AppTextInput
+									title={"Email"}
+									placeholder={"Enter your email address"}
+									onChangeText={handleChange("email")}
+								/>
+								{touched.email && errors.email && (
+									<Text style={styles.errorStyle}>{errors.email}</Text>
+								)}
+								<AppTextInput
+									title={"Password"}
+									placeholder={"Choose password"}
+									style={{ marginTop: 16 }}
+									onChangeText={handleChange("password")}
+									value={values.password}
+									secureTextEntry
+								/>
+								{touched.password && errors.password && (
+									<Text style={styles.errorStyle}>{errors.password}</Text>
+								)}
+								<AppTextInput
+									title={"Confirm Password"}
+									placeholder={"Confirm password"}
+									style={{ marginTop: 16 }}
+									onChangeText={handleChange("confirmPassword")}
+									value={values.confirmPassword}
+									secureTextEntry
+								/>
+								{touched.password && errors.confirmPassword && (
+									<Text style={styles.errorStyle}>
+										{errors.confirmPassword}
+									</Text>
+								)}
+								<View style={styles.checkContainer}>
+									<CheckBox
+										value={values.agreeToTerms}
+										onValueChange={(value) =>
+											setFieldValue("agreeToTerms", value)
+										}
+									/>
+									<MixedQuestion
+										first={"You have agreed to our"}
+										second={"Terms & Conditions"}
+									/>
+								</View>
+								{touched.agreeToTerms && errors.agreeToTerms && (
+									<Text style={styles.errorStyle}>{errors.agreeToTerms}</Text>
+								)}
+								<View style={styles.signInContainer}>
+									<EnterButton
+										text={"Create Account"}
+										style={styles.signIn}
+										onPress={handleSubmit}
+									/>
+									<MixedQuestion
+										first={"Already have an account?"}
+										second={"Sign In"}
+										onPress={() => navigation.navigate("Login")}
+									/>
+								</View>
+							</>
+						)}
+					</Formik>
 				</View>
 			</Screen>
-		</>
+		</View>
 	);
 }
 
@@ -153,6 +180,14 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		flexDirection: "row",
 		justifyContent: "flex-start",
+		marginTop: 16,
+	},
+
+	errorStyle: {
+		color: "red",
+		width: "100%",
+		marginTop: 5,
+		...label.l3r,
 	},
 
 	formContainer: {
@@ -164,7 +199,8 @@ const styles = StyleSheet.create({
 
 	screen: {
 		backgroundColor: neutral.background,
-		padding: 10,
+		height: "100%",
+		width: "100%",
 	},
 
 	subTitle: {
@@ -175,6 +211,11 @@ const styles = StyleSheet.create({
 	signIn: {
 		marginTop: 32,
 		marginBottom: 20,
+	},
+
+	signInContainer: {
+		width: "100%",
+		alignItems: "center",
 	},
 
 	titleContainer: {

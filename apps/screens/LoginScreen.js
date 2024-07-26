@@ -1,32 +1,24 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 import Brand from "../components/Brand";
-import body from "../config/body";
 import neutral from "../config/colors/neutralColor";
 import Screen from "../components/Screen";
 import primary from "../config/colors/primaryColor";
 import BackButton from "../components/BackButton";
+import AppTextInput from "../components/AppTextInput";
 import MixedQuestion from "../components/MixedQuestion";
+import EnterButton from "../components/EnterButton";
 import header from "../config/header";
-import useAuth from "../auth/useAuth";
+import body from "../config/body";
+import label from "../config/label";
 import ActivityIndicator from "../components/ActivityIndicator";
-
-import {
-	ErrorMessage,
-	Form,
-	FormField,
-	SubmitButton,
-} from "../components/forms";
 
 const validationSchema = Yup.object().shape({
 	email: Yup.string().required().email().label("Email"),
-	password: Yup.string().required().min(4).label("Password"),
-});
-
-const resetPasswordValidationSchema = Yup.object().shape({
-	resetEmail: Yup.string().required().email().label("Email"),
+	password: Yup.string().required().min(6).matches().label("Password"),
 });
 
 function LoginScreen({ navigation }) {
@@ -61,106 +53,70 @@ function LoginScreen({ navigation }) {
 			setResetSuccess(null);
 		}
 	};
-
 	return (
-		<>
+		<View style={styles.screen}>
 			<ActivityIndicator visible={loading} />
-			<Screen style={styles.screen}>
+			<Screen>
 				<View style={styles.backContainer}>
 					<BackButton onPress={() => navigation.goBack()} />
 				</View>
 				<View style={styles.formContainer}>
 					<View style={styles.brandContainer}>
-						<Brand color={primary.p900} />
+						<Brand color={primary.p900}></Brand>
 					</View>
 					<View style={styles.titleContainer}>
 						<Text style={styles.title}>Welcome Back!</Text>
-						<Text style={styles.subTitle}>Enter your detaails to sign in</Text>
+						<Text style={styles.subTitle}>Enter your details to sign in</Text>
 					</View>
-
-					<Form
+					<Formik
 						initialValues={{ email: "", password: "" }}
 						onSubmit={handleSubmit}
 						validationSchema={validationSchema}
 					>
-						<ErrorMessage error={error} visible={error} />
-						<FormField
-							title="Email"
-							autoCorrect={false}
-							name="email"
-							keyboardType="email-address"
-							placeholder="Enter your email address"
-							textContentType="emailAddress"
-						/>
-						<FormField
-							title="Password"
-							autoCapitalize="none"
-							autoCorrect={false}
-							name="password"
-							placeholder="Enter your password"
-							secureTextEntry
-							textContentType="password"
-						/>
-
-						<View style={styles.resetPasswordContainer}>
-							<Text style={styles.resetPasswordText}>Forgot Password? </Text>
-							<TouchableOpacity onPress={() => setModalVisible(true)}>
-								<Text style={styles.resetPasswordLink}>Reset it</Text>
-							</TouchableOpacity>
-						</View>
-
-						<SubmitButton title="Sign In" />
-					</Form>
-
-					<MixedQuestion
-						first={"Don't have an account?"}
-						second={"Create One"}
-						style={{ width: "100%", alignItems: "center" }}
-						onPress={() => navigation.navigate("Register")}
-					/>
+						{({ handleChange, handleSubmit, errors, values, touched }) => (
+							<>
+								<AppTextInput
+									title={"Email"}
+									placeholder={"Enter your email address"}
+									onChangeText={handleChange("email")}
+									value={values.email}
+								/>
+								{touched.email && errors.email && (
+									<Text style={styles.errorStyle}>{errors.email}</Text>
+								)}
+								<AppTextInput
+									title={"Password"}
+									placeholder={"Enter your password"}
+									style={{ marginTop: 16 }}
+									onChangeText={handleChange("password")}
+									value={values.password}
+								/>
+								{touched.password && errors.password && (
+									<Text style={styles.errorStyle}>{errors.password}</Text>
+								)}
+								<MixedQuestion
+									first={"Forgot Password?"}
+									second={"Reset it"}
+									style={{ marginTop: 16 }}
+								/>
+								<View style={styles.signInContainer}>
+									<EnterButton
+										text={"Sign In"}
+										style={styles.signIn}
+										onPress={handleSubmit}
+									/>
+									<MixedQuestion
+										first={"Don't have an account?"}
+										second={"Create One"}
+										onPress={() => navigation.navigate("Register")}
+									/>
+								</View>
+							</>
+						)}
+					</Formik>
 				</View>
-
-				<Modal
-					animationType="slide"
-					transparent={true}
-					visible={modalVisible}
-					onRequestClose={() => {
-						setModalVisible(!modalVisible);
-					}}
-				>
-					<View style={styles.modalView}>
-						<Text style={styles.modalText}>Reset Password</Text>
-
-						<Form
-							initialValues={{ resetEmail: "" }}
-							onSubmit={handleResetPassword}
-							validationSchema={resetPasswordValidationSchema}
-						>
-							<ErrorMessage error={resetError} visible={resetError} />
-							{resetSuccess && (
-								<Text style={styles.successMessage}>{resetSuccess}</Text>
-							)}
-							<FormField
-								title="Email"
-								autoCorrect={false}
-								name="resetEmail"
-								keyboardType="email-address"
-								placeholder="Enter your email address"
-								textContentType="emailAddress"
-							/>
-							<SubmitButton title="Send Reset Email" />
-						</Form>
-
-						<TouchableOpacity
-							style={[styles.button, styles.buttonClose]}
-							onPress={() => setModalVisible(!modalVisible)}
-						>
-							<Text style={styles.textStyle}>Close</Text>
-						</TouchableOpacity>
-					</View>
-				</Modal>
 			</Screen>
-		</>
+		</View>
 	);
 }
 
@@ -179,11 +135,17 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 
+	errorStyle: {
+		color: "red",
+		width: "100%",
+		marginTop: 5,
+		...label.l3r,
+	},
+
 	formContainer: {
 		width: "92%",
 		alignSelf: "center",
 		height: "auto",
-		alignItems: "center",
 	},
 
 	subTitle: {
@@ -191,9 +153,19 @@ const styles = StyleSheet.create({
 		...body.p2r,
 	},
 
+	signInContainer: {
+		marginTop: 32,
+		alignItems: "center",
+	},
+
+	signIn: {
+		marginBottom: 20,
+	},
+
 	screen: {
 		backgroundColor: neutral.background,
-		padding: 10,
+		height: "100%",
+		width: "100%",
 	},
 
 	titleContainer: {
@@ -207,65 +179,5 @@ const styles = StyleSheet.create({
 		color: neutral.n950,
 		...header.h3,
 	},
-
-	resetPasswordContainer: {
-		flexDirection: "row",
-		alignSelf: "flex-start",
-		marginBottom: 32,
-	},
-
-	resetPasswordText: {
-		color: neutral.n60,
-	},
-
-	resetPasswordLink: {
-		color: primary.p900,
-	},
-
-	modalView: {
-		margin: 20,
-		backgroundColor: "white",
-		borderRadius: 20,
-		padding: 35,
-		alignItems: "center",
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-		elevation: 5,
-	},
-
-	modalText: {
-		marginBottom: 15,
-		textAlign: "center",
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-
-	successMessage: {
-		color: "green",
-		marginBottom: 10,
-	},
-
-	button: {
-		borderRadius: 20,
-		padding: 10,
-		elevation: 2,
-		marginTop: 20,
-	},
-
-	buttonClose: {
-		backgroundColor: primary.p900,
-	},
-
-	textStyle: {
-		color: "white",
-		fontWeight: "bold",
-		textAlign: "center",
-	},
 });
-
 export default LoginScreen;

@@ -32,12 +32,12 @@ export default function App() {
 	};
 
 	// Temporary trigger to log out the user (for testing purposes)
-	useEffect(() => {
-		// Call the logout function here
-		if (user) {
-			handleLogout();
-		}
-	}, [user]);
+	// useEffect(() => {
+	// 	// Call the logout function here
+	// 	if (user) {
+	// 		handleLogout();
+	// 	}
+	// }, [user]);
 
 	if (!isReady || !fontsLoaded) {
 		return null; // You can show a loading screen here if you prefer

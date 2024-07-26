@@ -5,13 +5,10 @@ import primary from "../config/colors/primaryColor";
 import neutral from "../config/colors/neutralColor";
 import label from "../config/label";
 
-function EnterButton({ title, onPress, color = primary.p900 }) {
+function EnterButton({ text, style, ...otherProps }) {
 	return (
-		<TouchableOpacity
-			style={[styles.button, { backgroundColor: color }]}
-			onPress={onPress}
-		>
-			<Text style={styles.text}>{title}</Text>
+		<TouchableOpacity style={[styles.button, style]} {...otherProps}>
+			<Text style={{ color: neutral.white, ...label.l2b }}>{text}</Text>
 		</TouchableOpacity>
 	);
 }
@@ -19,18 +16,11 @@ function EnterButton({ title, onPress, color = primary.p900 }) {
 const styles = StyleSheet.create({
 	button: {
 		backgroundColor: primary.p900,
-		borderRadius: 10,
-		justifyContent: "center",
-		alignItems: "center",
-		padding: 15,
 		width: "100%",
-		marginVertical: 10,
-	},
-	text: {
-		color: "#fff",
-		fontSize: 18,
-		textTransform: "uppercase",
-		fontWeight: "bold",
+		height: 50,
+		borderRadius: 10,
+		alignItems: "center",
+		justifyContent: "center",
 	},
 });
 

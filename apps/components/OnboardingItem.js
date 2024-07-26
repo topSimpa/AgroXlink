@@ -10,7 +10,7 @@ import {
 
 import neutral from "../config/colors/neutralColor";
 import primary from "../config/colors/primaryColor";
-import EnterButton from "./Button";
+import EnterButton from "./EnterButton";
 import MixedQuestion from "./MixedQuestion";
 import Brand from "./Brand";
 import Screen from "./Screen";
@@ -68,7 +68,7 @@ function OnboardingItem({
 					</View>
 					<View style={styles.enter}>
 						<EnterButton
-							title="Let's Get Started"
+							text="Let's Get Started"
 							style={{ marginBottom: 10 }}
 							onPress={() => navigation.navigate(routes.REGISTER)}
 						/>
