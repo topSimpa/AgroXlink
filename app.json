@@ -29,7 +29,8 @@
         "expo-font", {
           "fonts": ["./apps/assets/fonts/RedHatDisplay.ttf", "./apps/assets/fonts/RedHatText.ttf"]
         }
-      ]
+      ],
+      "expo-asset"
     ]
   }
 }

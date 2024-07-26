@@ -15,8 +15,8 @@ import EnterButton from "../components/EnterButton";
 import header from "../config/header";
 import CheckBox from "../components/CheckBox";
 import label from "../config/label";
-import ActivityIndicator from "../components/ActivityIndicator";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({

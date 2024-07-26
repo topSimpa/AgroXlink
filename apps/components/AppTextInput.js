@@ -4,13 +4,14 @@ import neutral from "../config/colors/neutralColor";
 import label from "../config/label";
 import body from "../config/body";
 
-function AppTextInput({ title, style, ...otherProps }) {
-	return (
-		<View style={[styles.container, style]}>
-			<Text style={styles.title}>{title}</Text>
-			<TextInput {...otherProps} style={styles.input} />
-		</View>
-	);
+
+function AppTextInput({ title, style, ...otherProps}) {
+  return (
+    <View style={[styles.container, style]}>
+      <Text style={styles.title}>{title}</Text>
+      <TextInput {...otherProps} style={styles.input} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

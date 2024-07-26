@@ -14,7 +14,10 @@ function CatItem({ image, title }) {
         <View
           style={[
             styles.frame,
-            { borderColor: isClicked ? primary.p950 : primary.p300 },
+            {
+              borderColor: isClicked ? primary.p950 : primary.p300,
+              backgroundColor: isClicked ? primary.p500 : primary.p50,
+            },
           ]}
         >
           <Image source={image} />
@@ -28,7 +31,6 @@ function CatItem({ image, title }) {
 const styles = StyleSheet.create({
   frame: {
     alignItems: "center",
-    backgroundColor: primary.p50,
     borderRadius: 27,
     borderStyle: "solid",
     borderWidth: 1,

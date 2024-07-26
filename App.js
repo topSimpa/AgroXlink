@@ -8,6 +8,7 @@ import { AuthProvider } from "./apps/auth/context";
 import AuthNavigator from "./apps/navigation/AuthNavigator";
 import { auth } from "./apps/firebaseSetup";
 import MarketScreen from "./apps/screens/MarketScreen";
+import CommunityScreen from "./apps/screens/CommunityScreen";
 
 export default function App() {
 	const fontsLoaded = useCustomFonts();
@@ -50,6 +51,7 @@ export default function App() {
 			</NavigationContainer>
 		</AuthProvider>
 	);
+
 }
 
 const styles = StyleSheet.create({
