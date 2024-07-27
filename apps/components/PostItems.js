@@ -28,7 +28,6 @@ function PostItems({ profilePics, image, text, owner, time }) {
           <View style={styles.nameTime}>
             <Text
               style={[
-                styles.nameTimeItem,
                 { color: neutral.n950, ...label.l2b },
               ]}
             >

@@ -8,6 +8,7 @@ import { AuthProvider } from "./apps/auth/context";
 import AuthNavigator from "./apps/navigation/AuthNavigator";
 import { auth } from "./apps/firebaseSetup";
 import MarketScreen from "./apps/screens/MarketScreen";
+import MessageScreen from "./apps/screens/MessageScreen"
 import CommunityScreen from "./apps/screens/CommunityScreen";
 
 export default function App() {
