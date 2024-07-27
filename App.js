@@ -55,7 +55,7 @@ export default function App() {
   // 	</AuthProvider>
   // );
   return (
-    <MarketScreen />
+    <MessageScreen />
     // <AuthProvider>
     //   <NavigationContainer>
     //     {user ? <MarketScreen /> : <AuthNavigator />}

@@ -1,5 +1,5 @@
-import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { React, useState } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import body from "../config/body";
 import Elipses from "../assets/elipses.svg";
@@ -10,24 +10,33 @@ import Save from "../assets/save.svg";
 import Share from "../assets/share.svg";
 import Comment from "../assets/comment.svg";
 import label from "../config/label";
+import error from "../config/colors/error";
 
 function PostItems({ profilePics, image, text, owner, time }) {
+  const [isLike, setLike] = useState(false);
+  const [isSaved, setSave] = useState(false);
+
   return (
     <View style={styles.post}>
       <View style={styles.postHeader}>
-        <View style={styles.nameTime}>
+        <View style={styles.headerDetails}>
           <Image
             resizeMode={"contain"}
             style={styles.profile}
             source={profilePics}
           />
-          <Text
-            style={[styles.nameTimeItem, { color: neutral.n950, ...label.l2b }]}
-          >
-            {owner}
-          </Text>
-          <View style={styles.activeCircle} />
-          <Text style={{ color: neutral.n400, ...label.l4b }}>{time}</Text>
+          <View style={styles.nameTime}>
+            <Text
+              style={[
+                styles.nameTimeItem,
+                { color: neutral.n950, ...label.l2b },
+              ]}
+            >
+              {owner}
+            </Text>
+            <View style={styles.activeCircle} />
+            <Text style={{ color: neutral.n400, ...label.l4b }}>{time}</Text>
+          </View>
         </View>
         <Elipses></Elipses>
       </View>
@@ -44,7 +53,12 @@ function PostItems({ profilePics, image, text, owner, time }) {
           <View style={styles.reactionContainer}>
             <View style={styles.lcsBox}>
               <View style={styles.reactionItems}>
-                <Like />
+                <TouchableOpacity onPress={() => setLike(!isLike)}>
+                  <Like
+                    fill={isLike ? error.r900 : neutral.white}
+                    color={isLike ? error.r900 : neutral.n600}
+                  />
+                </TouchableOpacity>
                 <Text>Like</Text>
               </View>
               <View style={styles.reactionItems}>
@@ -56,8 +70,13 @@ function PostItems({ profilePics, image, text, owner, time }) {
                 <Text>Share</Text>
               </View>
             </View>
-            <View style={styles.save}>
-              <Save />
+            <View style={styles.reactionItems}>
+              <TouchableOpacity onPress={() => setSave(!isSaved)}>
+                <Save
+                  fill={isSaved ? primary.p900 : neutral.white}
+                  color={isSaved ? primary.p900 : neutral.n600}
+                />
+              </TouchableOpacity>
               <Text>Save</Text>
             </View>
           </View>
@@ -73,7 +92,18 @@ const styles = StyleSheet.create({
     height: 4,
     borderRadius: 2,
     backgroundColor: primary.p900,
-    marginHorizontal: 8,
+    marginHorizontal: 6,
+  },
+
+  errorStyle: {
+		color: "red",
+		width: "100%",
+		marginTop: 5,
+		...label.l3r,
+	},
+
+  headerDetails: {
+    flexDirection: "row",
   },
 
   lcsBox: {
@@ -104,12 +134,13 @@ const styles = StyleSheet.create({
   postHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     width: "100%",
   },
 
   profile: {
-    width: "100%",
-    flex: 1,
+    heigth: "100%",
+    marginRight: 8,
   },
 
   reaction: {

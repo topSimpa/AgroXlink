@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     right: 8,
     bottom: 102,
   },
+  
 
   feeds: {
     marginHorizontal: 16,
