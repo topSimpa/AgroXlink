@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import body from "../config/body";
@@ -18,7 +18,6 @@ function PostItems({
 	text,
 	owner,
 	time,
-	likes,
 	isLike,
 	onLike,
 	onSave,
@@ -39,7 +38,7 @@ function PostItems({
 						<Text style={{ color: neutral.n400, ...label.l4b }}>{time}</Text>
 					</View>
 				</View>
-				<Elipses></Elipses>
+				<Elipses />
 			</View>
 			<View style={styles.postDetails}>
 				<Text style={styles.text}>{text}</Text>
@@ -95,75 +94,57 @@ const styles = StyleSheet.create({
 		backgroundColor: primary.p900,
 		marginHorizontal: 6,
 	},
-
 	errorStyle: {
 		color: "red",
 		width: "100%",
 		marginTop: 5,
 		...label.l3r,
 	},
-
 	headerDetails: {
 		flexDirection: "row",
 	},
-
 	lcsBox: {
 		flexDirection: "row",
 	},
-
 	nameTime: {
 		alignItems: "center",
 		flexDirection: "row",
 	},
-
 	text: {
 		color: neutral.n950,
 		marginBottom: 16,
 		...body.p1r,
 	},
-
 	post: {
 		marginBottom: 4,
 		padding: 16,
 		backgroundColor: neutral.white,
 	},
-
 	postDetails: {
 		flex: 1,
 	},
-
 	postHeader: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		alignItems: "center",
-		width: "100%",
 	},
-
 	profile: {
-		heigth: "100%",
-		marginRight: 8,
+		width: 32,
+		height: 32,
+		borderRadius: 16,
 	},
-
 	reaction: {
-		flexDirection: "row",
-		marginTop: 12,
+		marginTop: 16,
 		borderTopWidth: 1,
-		borderTopColor: neutral.n100,
+		borderTopColor: neutral.n200,
+		paddingTop: 12,
 	},
-
 	reactionContainer: {
-		width: "100%",
-		padding: 8,
 		flexDirection: "row",
 		justifyContent: "space-between",
-		marginTop: 4,
 	},
 	reactionItems: {
+		flexDirection: "row",
 		alignItems: "center",
-		color: neutral.n600,
-		justifyContent: "space-between",
-		...label.l2b,
-		marginRight: 20,
 	},
 });
 

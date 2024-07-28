@@ -13,6 +13,8 @@ import {
 	orderBy,
 	onSnapshot,
 	updateDoc,
+	arrayUnion,
+	arrayRemove,
 } from "firebase/firestore";
 import { db } from "../firebaseSetup"; // Ensure this path is correct
 import {
@@ -29,10 +31,14 @@ import header from "../config/header";
 import MainMenu from "../components/MainMenu";
 import AddButton from "../components/AddButton";
 import ActivityPost from "../components/ActivityPost";
+import useAuth from "../auth/useAuth";
+
+const currentUserId = "currentUserId"; // Replace this with logic to get the current user's ID
 
 function CommunityScreen() {
 	const [show, setShow] = useState(false);
 	const [posts, setPosts] = useState([]);
+	const { user } = useAuth();
 
 	const toggleShow = () => setShow(!show);
 
@@ -42,25 +48,25 @@ function CommunityScreen() {
 			const postsData = snapshot.docs.map((doc) => ({
 				id: doc.id,
 				...doc.data(),
+				likedBy: doc.data().likedBy || [],
+				savedBy: doc.data().savedBy || [],
 			}));
 			setPosts(postsData);
 		});
 		return () => unsubscribe();
 	}, []);
 
-	const handleLike = async (postId, isLiked, currentLikes) => {
-		const newLikeStatus = !isLiked;
+	const handleLike = async (postId, isLiked) => {
 		const postRef = doc(db, "posts", postId);
 		await updateDoc(postRef, {
-			likes: newLikeStatus ? currentLikes + 1 : currentLikes - 1,
+			likedBy: isLiked ? arrayRemove(user.id) : arrayUnion(user.id),
 		});
 	};
 
 	const handleSave = async (postId, isSaved) => {
-		const newSaveStatus = !isSaved;
 		const postRef = doc(db, "posts", postId);
 		await updateDoc(postRef, {
-			saved: newSaveStatus,
+			savedBy: isSaved ? arrayRemove(user.id) : arrayUnion(user.id),
 		});
 	};
 
@@ -90,22 +96,26 @@ function CommunityScreen() {
 					<ScrollView contentContainerStyle={styles.scrollview}>
 						<SearchBar placeholder={"search"} />
 						<View style={styles.feeds}>
-							{posts.map((post) => (
-								<PostItems
-									key={post.id}
-									owner={post.userId} // Replace with the user's display name
-									time={formatTimeAgo(new Date(post.dateCreated.toDate()))}
-									text={post.text}
-									image={
-										post.attachmentUrl ? { uri: post.attachmentUrl } : null
-									}
-									profilePics={require("../assets/profile.png")} // Replace with actual user profile picture
-									isLike={post.likes > 0}
-									onLike={() => handleLike(post.id, post.likes > 0, post.likes)}
-									onSave={() => handleSave(post.id, post.saved)}
-									isSaved={post.saved}
-								/>
-							))}
+							{posts.map((post) => {
+								const isLiked = post.likedBy.includes(user.id);
+								const isSaved = post.savedBy.includes(user.id);
+								return (
+									<PostItems
+										key={post.id}
+										owner={post.userId} // Replace with the user's display name
+										time={formatTimeAgo(new Date(post.dateCreated.toDate()))}
+										text={post.text}
+										image={
+											post.attachmentUrl ? { uri: post.attachmentUrl } : null
+										}
+										profilePics={require("../assets/profile.png")} // Replace with actual user profile picture
+										isLike={isLiked}
+										onLike={() => handleLike(post.id, isLiked)}
+										onSave={() => handleSave(post.id, isSaved)}
+										isSaved={isSaved}
+									/>
+								);
+							})}
 						</View>
 					</ScrollView>
 					<TouchableOpacity onPress={toggleShow}>
