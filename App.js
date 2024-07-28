@@ -8,68 +8,67 @@ import { AuthProvider } from "./apps/auth/context";
 import AuthNavigator from "./apps/navigation/AuthNavigator";
 import { auth } from "./apps/firebaseSetup";
 import MarketScreen from "./apps/screens/MarketScreen";
-import MessageScreen from "./apps/screens/MessageScreen"
+
 import CommunityScreen from "./apps/screens/CommunityScreen";
 
 export default function App() {
-  const fontsLoaded = useCustomFonts();
-  const [user, setUser] = useState(null);
-  const [isReady, setIsReady] = useState(false);
+	const fontsLoaded = useCustomFonts();
+	const [user, setUser] = useState(null);
+	const [isReady, setIsReady] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setIsReady(true);
-    });
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setUser(user);
+			setIsReady(true);
+		});
+		return unsubscribe;
+	}, []);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      console.log("User logged out successfully");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
+	const handleLogout = async () => {
+		try {
+			await signOut(auth);
+			console.log("User logged out successfully");
+		} catch (error) {
+			console.error("Error logging out:", error);
+		}
+	};
 
-  // Temporary trigger to log out the user (for testing purposes)
-  // useEffect(() => {
-  // 	// Call the logout function here
-  // 	if (user) {
-  // 		handleLogout();
-  // 	}
-  // }, [user]);
+	// // Temporary trigger to log out the user (for testing purposes)
+	// useEffect(() => {
+	// 	// Call the logout function here
+	// 	if (user) {
+	// 		handleLogout();
+	// 	}
+	// }, [user]);
 
-  if (!isReady || !fontsLoaded) {
-    return null; // You can show a loading screen here if you prefer
-  }
-  if (!isReady || !fontsLoaded) {
-    return null; // You can show a loading screen here if you prefer
-  }
+	if (!isReady || !fontsLoaded) {
+		return null; // You can show a loading screen here if you prefer
+	}
+	if (!isReady || !fontsLoaded) {
+		return null; // You can show a loading screen here if you prefer
+	}
 
-  // return (
-  // 	<AuthProvider>
-  // 		<NavigationContainer>
-  // 			{user ? <CommunityScreen /> : <AuthNavigator />}
-  // 		</NavigationContainer>
-  // 	</AuthProvider>
-  // );
-  return (
-    <MessageScreen />
-    // <AuthProvider>
-    //   <NavigationContainer>
-    //     {user ? <MarketScreen /> : <AuthNavigator />}
-    //   </NavigationContainer>
-    // </AuthProvider>
-  );
+	// return (
+	// 	<AuthProvider>
+	// 		<NavigationContainer>
+	// 			{user ? <CommunityScreen /> : <AuthNavigator />}
+	// 		</NavigationContainer>
+	// 	</AuthProvider>
+	// );
+	return (
+		<AuthProvider>
+			<NavigationContainer>
+				{user ? <CommunityScreen /> : <AuthNavigator />}
+			</NavigationContainer>
+		</AuthProvider>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+		alignItems: "center",
+		justifyContent: "center",
+	},
 });
