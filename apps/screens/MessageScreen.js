@@ -53,10 +53,10 @@ function MessageScreen() {
             ))}
           </View>
         </ScrollView>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <AddButton style={styles.addButton} />
         </TouchableOpacity>
-        <MainMenu currentPage={3} />
+        <MainMenu currentPage={3} /> */}
       </Screen>
     </View>
   );
