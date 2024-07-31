@@ -1,5 +1,7 @@
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import OnboardingItem from "../components/OnboardingItem";
 
 const screens = [
@@ -32,6 +34,13 @@ const screens = [
 ];
 
 function OnboardingScreen({ navigation }) {
+	const completeOnboarding = async () => {
+		await AsyncStorage.setItem("onboarded", "true");
+		const onboarded = await AsyncStorage.getItem("onboarded");
+		console.log("complete onboarded ->", onboarded);
+		navigation.navigate("Register");
+	};
+
 	return (
 		<FlatList
 			data={screens}
@@ -45,6 +54,7 @@ function OnboardingScreen({ navigation }) {
 					captionOne={item.captionOne}
 					captionTwo={item.captionTwo}
 					navigation={navigation}
+					onBoarding={completeOnboarding}
 				/>
 			)}
 			horizontal

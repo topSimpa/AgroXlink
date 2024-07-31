@@ -27,6 +27,7 @@ function OnboardingItem({
 	captionOne,
 	captionTwo,
 	navigation,
+	onBoarding,
 }) {
 	const { width } = useWindowDimensions();
 
@@ -70,7 +71,7 @@ function OnboardingItem({
 						<EnterButton
 							text="Let's Get Started"
 							style={{ marginBottom: 10 }}
-							onPress={() => navigation.navigate(routes.REGISTER)}
+							onPress={onBoarding}
 						/>
 						<MixedQuestion
 							first={"Already have an account?"}
