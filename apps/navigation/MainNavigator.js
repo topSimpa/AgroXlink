@@ -1,6 +1,4 @@
 import React from "react";
-import Constants from "expo-constants";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import MarketScreen from "../screens/MarketScreen";
@@ -18,62 +16,62 @@ import People from "../assets/people.svg";
 const Tab = createBottomTabNavigator();
 
 function MainNavigator() {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: primary.p900,
-        tabBarInactiveTintColor: neutral.n900,
-        tabBarStyle: {
-          backgroundColor: neutral.background,
-          borderTopWidth: 1,
-          borderColor: neutral.n100,
-          elevation: 0,
-          height: 70,
-          paddingTop: 12,
-          paddingBottom: 12,
-        },
-        tabBarLabelStyle: label.l4b,
-        headerShown: false,
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={MarketScreen}
-        options={{
-          tabBarIcon: ({ size, color }) => (
-            <Home width={size} height={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Crop Care"
-        component={CropCareScreen}
-        options={{
-          tabBarIcon: ({ size, color }) => (
-            <CropCare width={size} height={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Community"
-        component={CommunityScreen}
-        options={{
-          tabBarIcon: ({ size, color }) => (
-            <People width={size} height={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Messages"
-        component={MessageScreen}
-        options={{
-          tabBarIcon: ({ size, color }) => (
-            <Messages width={size} height={size} color={color} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
+	return (
+		<Tab.Navigator
+			screenOptions={{
+				tabBarActiveTintColor: primary.p900,
+				tabBarInactiveTintColor: neutral.n900,
+				tabBarStyle: {
+					backgroundColor: neutral.background,
+					borderTopWidth: 1,
+					borderColor: neutral.n100,
+					elevation: 0,
+					height: 70,
+					paddingTop: 12,
+					paddingBottom: 12,
+				},
+				tabBarLabelStyle: label.l4b,
+				headerShown: false,
+			}}
+		>
+			<Tab.Screen
+				name="Home"
+				component={MarketScreen}
+				options={{
+					tabBarIcon: ({ size, color }) => (
+						<Home width={size} height={size} color={color} />
+					),
+				}}
+			/>
+			<Tab.Screen
+				name="Crop Care"
+				component={CropCareScreen}
+				options={{
+					tabBarIcon: ({ size, color }) => (
+						<CropCare width={size} height={size} color={color} />
+					),
+				}}
+			/>
+			<Tab.Screen
+				name="Community"
+				component={CommunityScreen}
+				options={{
+					tabBarIcon: ({ size, color }) => (
+						<People width={size} height={size} color={color} />
+					),
+				}}
+			/>
+			<Tab.Screen
+				name="Messages"
+				component={MessageScreen}
+				options={{
+					tabBarIcon: ({ size, color }) => (
+						<Messages width={size} height={size} color={color} />
+					),
+				}}
+			/>
+		</Tab.Navigator>
+	);
 }
 
 // const styles = StyleSheet.create({

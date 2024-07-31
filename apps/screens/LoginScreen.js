@@ -39,6 +39,8 @@ function LoginScreen({ navigation }) {
 
 			setLoading(false);
 			setError(null);
+
+			navigation.navigate("Home");
 		} catch (error) {
 			setError(error.message);
 			console.error(error);
@@ -99,7 +101,7 @@ function LoginScreen({ navigation }) {
 								<MixedQuestion
 									first={"Forgot Password?"}
 									second={"Reset it"}
-									style={{ marginTop: 16, }}
+									style={{ marginTop: 16 }}
 								/>
 								<View style={styles.signInContainer}>
 									<EnterButton
