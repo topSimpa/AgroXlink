@@ -1,46 +1,49 @@
-import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import NameTime from "./NameTime";
-import neutral from "../config/colors/neutralColor";
+import React from "react";
+import { StyleSheet } from "react-native";
 import body from "../config/body";
+import neutral from "../config/colors/neutralColor";
+import primary from "../config/colors/primaryColor";
 
-function Message({ picture, owner, time, lastMessage }) {
-  const [isClicked, clicked] = useState(false);
-
+function Message({ who, text }) {
   return (
-    <TouchableOpacity onPress={() => clicked(true)}>
-      <View style={styles.messageHeader}>
-        <Image style={styles.profile} source={picture} />
-        <View style={styles.latest}>
-          <NameTime owner={owner} time={time} />
-          <Text
-            style={{
-              color: isClicked ? neutral.n200 : neutral.n950,
-              marginTop: 4,
-              ...body.p3b,
-            }}
-          >
-            {lastMessage}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+    <View style={[styles.chat, who === "owner" ? owner : styles.pair]}>
+      <Text
+        style={[
+          styles.chatText,
+          { color: who === "owner" ? neutral.n950 : neutral.white },
+        ]}
+      >
+        {text}
+      </Text>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  messageHeader: {
-    alignItems: "center",
-    borderBottomWidth: 1,                    
-    borderColor: neutral.n100,
-    flexDirection: "row",
-    width: "100%",
-    height: 92,
-    justifyContent: "space-between",
+  chat: {
+    marginBottom: 4,
+    width: "72%",
+    padding: 12,
   },
 
-  profile: {
-    heigth: "100%",
+  chatText: {
+    ...body.p1r,
+  },
+
+  owner: {
+    alignSelf: "flex-end",
+    backgroundColor: primary.p100,
+    borderRadius: 16,
+    borderTopRightRadius: 0,
+    marginRight: 4,
+  },
+
+  pair: {
+    alignSelf: "flex-start",
+    backgroundColor: primary.p900,
+    borderRadius: 16,
+    borderTopLeftRadius: 0,
+    marginLeft: 4,
   },
 });
 

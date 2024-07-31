@@ -10,8 +10,8 @@ import { auth } from "./apps/firebaseSetup";
 import MarketScreen from "./apps/screens/MarketScreen";
 
 import CommunityScreen from "./apps/screens/CommunityScreen";
-import HomeScreen from "./apps/screens/HomeScreen";
 import LoginScreen from "./apps/screens/LoginScreen";
+import HomeNavigator from "./apps/navigation/HomeNavigator";
 
 export default function App() {
   const fontsLoaded = useCustomFonts();
@@ -53,7 +53,7 @@ export default function App() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        {user ? <HomeScreen /> : <AuthNavigator />}
+        {user ? <HomeNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     </AuthProvider>
   );
