@@ -9,7 +9,7 @@ import { AuthProvider } from "./apps/auth/context";
 import { auth } from "./apps/firebaseSetup";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import HomeScreen from "./apps/screens/HomeScreen";
+import HomeNavigator from "./apps/navigation/HomeNavigator";
 import LoginScreen from "./apps/screens/LoginScreen";
 import CreateAccountScreen from "./apps/screens/CreateAccountScreen";
 import OnboardingScreen from "./apps/screens/OnboardingScreen";
@@ -34,8 +34,9 @@ export default function App() {
     const checkOnboarding = async () => {
       const onboarded = await AsyncStorage.getItem("onboarded");
       console.log("onboarded ->", onboarded);
+      console.log("user ->", user);
       if (onboarded) {
-        setInitialRoute(user ? "Home" : "Login");
+        setInitialRoute(user ? "HomeNavigator" : "Login");
       } else {
         setInitialRoute("Onboarding");
       }
@@ -68,8 +69,8 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Home"
-            component={HomeScreen}
+            name="HomeNavigator"
+            component={HomeNavigator}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

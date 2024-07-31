@@ -33,7 +33,6 @@ import AddButton from "../components/AddButton";
 import ActivityPost from "../components/ActivityPost";
 import useAuth from "../auth/useAuth";
 
-const currentUserId = "currentUserId"; // Replace this with logic to get the current user's ID
 
 function CommunityScreen() {
   const [show, setShow] = useState(false);
