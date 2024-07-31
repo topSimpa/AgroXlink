@@ -56,7 +56,7 @@ const label = StyleSheet.create({
   l4b: {
     ...l4,
     fontFamily,
-    fontWeight: "\bold",
+    fontWeight: "bold",
   },
 });
 

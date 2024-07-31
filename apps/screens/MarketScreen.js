@@ -151,7 +151,7 @@ function MarketScreen() {
             </View>
           </View>
         </ScrollView>
-        <MainMenu currentPage={0} />
+        {/* <MainMenu currentPage={0} /> */}
       </Screen>
     </View>
   );
