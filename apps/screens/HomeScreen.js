@@ -1,8 +1,8 @@
 import React from "react";
-import MainNavigator from "../components/MainNavigator";
+import MainNavigator from "../navigation/MainNavigator";
 
 function HomeScreen() {
-  return <MainNavigator/>;
+  return <MainNavigator />;
 }
 
 export default HomeScreen;
