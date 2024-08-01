@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -31,7 +31,12 @@ const chats = [
   },
 ];
 
-function MessagesScreen({ navigation }) {
+function MessagesScreen({}) {
+  const [chatList, setChatList] = useState([]);
+  const onResults = (result) => {
+    setChatList(result);
+  };
+
   return (
     <View style={styles.screen}>
       <Screen>
@@ -39,7 +44,11 @@ function MessagesScreen({ navigation }) {
           <Text style={{ color: neutral.n950, ...header.h4 }}>Messages</Text>
         </MenuHeader>
         <ScrollView contentContainerStyle={styles.scrollview}>
-          <SearchBar placeholder={"search"} />
+          <SearchBar
+            field={"chat.Owner"}
+            placeholder={"search"}
+            onResults={(result) => onResults(result)}
+          />
           <View style={styles.feeds}>
             {chats.map((chat, index) => (
               <ChatHead

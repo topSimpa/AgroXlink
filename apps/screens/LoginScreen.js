@@ -94,6 +94,7 @@ function LoginScreen({ navigation }) {
                   style={{ marginTop: 16 }}
                   onChangeText={handleChange("password")}
                   value={values.password}
+                  secureTextEntry
                 />
                 {touched.password && errors.password && (
                   <Text style={styles.errorStyle}>{errors.password}</Text>

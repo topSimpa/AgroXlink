@@ -93,7 +93,7 @@ function CommunityScreen() {
             <Text style={{ color: neutral.n950, ...header.h4 }}>Community</Text>
           </MenuHeader>
           <ScrollView contentContainerStyle={styles.scrollview}>
-            <SearchBar placeholder={"search"} />
+            <SearchBar placeholder={"search"} field={'activity.userName'} onResults={onResults}/>
             <View style={styles.feeds}>
               {posts.map((post) => {
                 const isLiked = post.likedBy.includes(user.id);
