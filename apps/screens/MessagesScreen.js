@@ -9,7 +9,7 @@ import {
 
 import AddButton from "../components/AddButton";
 import Screen from "../components/Screen";
-import Chat from "../components/Chat";
+import ChatHead from "../components/ChatHead";
 import MenuHeader from "../components/MenuHeader";
 import neutral from "../config/colors/neutralColor";
 import header from "../config/header";
@@ -42,22 +42,13 @@ function MessagesScreen({ navigation }) {
           <SearchBar placeholder={"search"} />
           <View style={styles.feeds}>
             {chats.map((chat, index) => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("ChatMessages", {
-                    picture: chat.profilePics,
-                    owner: chat.name,
-                  });
-                }}
-              >
-                <Chat
-                  key={index}
-                  owner={chat.name}
-                  time={chat.time}
-                  lastchat={chat.lastchat}
-                  picture={chat.profilePicture}
-                />
-              </TouchableOpacity>
+              <ChatHead
+                key={index}
+                owner={chat.name}
+                time={chat.time}
+                lastMessage={chat.lastMessage}
+                picture={chat.profilePicture}
+              />
             ))}
           </View>
         </ScrollView>

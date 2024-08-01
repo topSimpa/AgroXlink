@@ -3,19 +3,31 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import NameTime from "./NameTime";
 import neutral from "../config/colors/neutralColor";
 import body from "../config/body";
+import { useNavigation } from "@react-navigation/native";
 
-function Chat({ picture, owner, time, lastMessage }) {
+function ChatHead({ picture, owner, time, lastMessage }) {
   const [isClicked, clicked] = useState(false);
+  const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => clicked(true)}>
+    <TouchableOpacity
+      onPress={() => {
+        clicked(true);
+        navigation.navigate("ChatScreen", {
+          picture: picture,
+          owner: owner,
+        });
+      }}
+    >
       <View style={styles.messageHeader}>
-        <Image style={styles.profile} source={picture} />
+        <View style={styles.imageContainer}>
+          <Image resizeMode="contain" style={styles.profile} source={picture} />
+        </View>
         <View style={styles.latest}>
           <NameTime owner={owner} time={time} />
           <Text
             style={{
-              color: isClicked ? neutral.n200 : neutral.n950,
+              color: isClicked ? neutral.n400 : neutral.n950,
               marginTop: 4,
               ...body.p3b,
             }}
@@ -29,6 +41,15 @@ function Chat({ picture, owner, time, lastMessage }) {
 }
 
 const styles = StyleSheet.create({
+  imageContainer: {
+    width: 56,
+    height: 56,
+  },
+
+  latest: {
+    marginLeft: 8,
+  },
+
   messageHeader: {
     alignItems: "center",
     borderBottomWidth: 1,
@@ -36,12 +57,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 92,
-    justifyContent: "space-between",
   },
 
   profile: {
-    heigth: "100%",
+    height: "100%",
+    width: "100%",
   },
 });
 
-export default Chat;
+export default ChatHead;

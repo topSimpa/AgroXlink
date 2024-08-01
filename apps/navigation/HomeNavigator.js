@@ -63,12 +63,13 @@ function HomeNavigator() {
         }}
       />
       <Tab.Screen
-        name="MessagesChat"
+        name="MessagesNavigator"
         component={MessageChatNavigator}
         options={{
           tabBarIcon: ({ size, color }) => (
             <Messages width={size} height={size} color={color} />
           ),
+          title: "Messages",
         }}
       />
     </Tab.Navigator>

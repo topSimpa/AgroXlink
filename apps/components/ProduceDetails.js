@@ -24,28 +24,40 @@ function ProduceDetails({ image, name, farmName, price, unit }) {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={image}
-        resizeMode="cover"
-        style={{ width: "100%", height: 140, overflow: "hidden" }}
-      >
-        <TouchableOpacity onPress={handleClicked} style={styles.save}>
-          <View
-            style={[
-              styles.iconContainer,
-              {
-                backgroundColor: neutral.white,
-                width: 35,
-              },
-            ]}
-          >
-            <FontAwesome name={isSaved ? "bookmark" : "bookmark-o"} size={24} color={primary.p900} />
-          </View>
-        </TouchableOpacity>
-      </ImageBackground>
+      <View style={styles.imageContainer}>
+        <ImageBackground
+          source={image}
+          resizeMode="cover"
+          style={{
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            width: "100%",
+            height: "100%",
+            overflow: "hidden",
+          }}
+        >
+          <TouchableOpacity onPress={handleClicked} style={styles.save}>
+            <View
+              style={[
+                styles.iconContainer,
+                {
+                  backgroundColor: neutral.white,
+                  width: 35,
+                },
+              ]}
+            >
+              <FontAwesome
+                name={isSaved ? "bookmark" : "bookmark-o"}
+                size={24}
+                color={primary.p900}
+              />
+            </View>
+          </TouchableOpacity>
+        </ImageBackground>
+      </View>
 
       <View style={styles.details}>
-        <View style={styles.nameContainer}>
+        <View>
           <Text style={[styles.name, styles.text]}>{name}</Text>
           <Text style={[styles.farm, styles.text]}>{farmName}</Text>
         </View>
@@ -79,7 +91,7 @@ const styles = StyleSheet.create({
     width: "47%",
     borderStyle: "solid",
     borderWidth: 2,
-    borderRadius: 5,
+    borderRadius: 8,
     borderColor: neutral.n300,
     marginRight: 8,
     marginBottom: 16,
@@ -91,6 +103,11 @@ const styles = StyleSheet.create({
     height: 36,
     justifyContent: "center",
     width: 36,
+  },
+
+  imageContainer: {
+    width: "100%",
+    height: 140,
   },
 
   details: {
