@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function CropCareScreen() {
-  return (
-    null
-  )
+  return null;
 }
 
-export default CropCareScreen
+export default CropCareScreen;

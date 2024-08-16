@@ -40,7 +40,7 @@ function LoginScreen({ navigation }) {
       setLoading(false);
       setError(null);
 
-      navigation.navigate("HomeNavigator");
+      navigation.navigate("profileDrawer");
     } catch (error) {
       setError(error.message);
       console.error(error);

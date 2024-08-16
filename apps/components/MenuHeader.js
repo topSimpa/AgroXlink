@@ -1,19 +1,20 @@
-import { Image, View, StyleSheet, Button } from "react-native";
+import { Image, View, StyleSheet, Button, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
 import neutral from "../config/colors/neutralColor";
+import header from "../config/header";
 import error from "../config/colors/error";
 import primary from "../config/colors/primaryColor";
 import { auth } from "../firebaseSetup";
 import useAuth from "../auth/useAuth";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-function MenuHeader({ children, image }) {
+function MenuHeader({ color, title, image }) {
   const { user } = useAuth();
   const navigation = useNavigation();
-
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -25,19 +26,23 @@ function MenuHeader({ children, image }) {
     }
   };
 
-//   // // Temporary trigger to log out the user (for testing purposes)
-//   useEffect(() => {
-//     // Call the logout function here
-//     if (user) {
-//       handleLogout();
-//     }
-//   }, [user]);
+  //   // // Temporary trigger to log out the user (for testing purposes)
+  //   useEffect(() => {
+  //     // Call the logout function here
+  //     if (user) {
+  //       handleLogout();
+  //     }
+  //   }, [user]);
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.header}>
-        <Image source={image} />
-        <View style={StyleSheet.nameContainer}>{children}</View>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Image source={image} />
+        </TouchableOpacity>
+        <View style={StyleSheet.nameContainer}>
+          <Text style={{ color: color, ...header.h4 }}>{title}</Text>
+        </View>
         <Button title="Logout" onPress={handleLogout}></Button>
         <View style={styles.bellContainer}>
           <Ionicons

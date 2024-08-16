@@ -21,7 +21,7 @@ const chats = [
     name: "Bayero Abdul",
     time: "13m ago",
     lastMessage:
-      "Hi there! Just wanted to let you know we have fresh strawberries",
+      "Hey! How's your tomato crop this year? Ours are ripening nicely, but we had ...",
   },
   {
     name: "Misturah Ali",
@@ -40,9 +40,11 @@ function MessagesScreen({}) {
   return (
     <View style={styles.screen}>
       <Screen>
-        <MenuHeader image={require("../assets/Avatar.png")}>
-          <Text style={{ color: neutral.n950, ...header.h4 }}>Messages</Text>
-        </MenuHeader>
+        <MenuHeader
+          image={require("../assets/Avatar.png")}
+          color={neutral.n950}
+          title={"Messages"}
+        />
         <ScrollView contentContainerStyle={styles.scrollview}>
           <SearchBar
             field={"chat.Owner"}
@@ -78,7 +80,11 @@ const styles = StyleSheet.create({
   },
 
   feeds: {
-    marginHorizontal: 16,
+    paddingHorizontal: 16,
+  },
+
+  screen: {
+    backgroundColor: neutral.background
   },
 
   scrollview: {

@@ -1,9 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import MarketScreen from "../screens/MarketScreen";
 import CommunityScreen from "../screens/CommunityScreen";
-import MessageScreen from "../screens/MessagesScreen";
 import CropCareScreen from "../screens/CropCareScreen";
 import neutral from "../config/colors/neutralColor";
 import label from "../config/label";
@@ -13,10 +11,11 @@ import Home from "../assets/home.svg";
 import Messages from "../assets/message.svg";
 import People from "../assets/people.svg";
 import MessageChatNavigator from "./MessageChatNavigator";
+import ProduceDetailsStack from "./ProduceDetailsStack";
 
 const Tab = createBottomTabNavigator();
 
-function HomeNavigator() {
+function HomeNavigator({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -36,8 +35,8 @@ function HomeNavigator() {
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={MarketScreen}
+        name="market"
+        component={ProduceDetailsStack}
         options={{
           tabBarIcon: ({ size, color }) => (
             <Home width={size} height={size} color={color} />

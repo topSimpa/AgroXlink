@@ -6,7 +6,7 @@ import body from "../config/body";
 import neutral from "../config/colors/neutralColor";
 import { Formik } from "formik";
 
-function SearchBar({ placeholder, field, onResults }) {
+function SearchBar({ placeholder, style, field, onResults }) {
   const fetchNewList = (queryText) => {
     //implement this
     console.log("fetching...");
@@ -15,7 +15,7 @@ function SearchBar({ placeholder, field, onResults }) {
   };
 
   return (
-    <View style={styles.searchContainer}>
+    <View style={[styles.searchContainer, style]}>
       <TouchableHighlight style={styles.searchBar}>
         <View style={styles.searchInputContainer}>
           <Ionicons name="search-outline" size={20} color={neutral.n300} />

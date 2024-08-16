@@ -13,6 +13,8 @@ import HomeNavigator from "./apps/navigation/HomeNavigator";
 import LoginScreen from "./apps/screens/LoginScreen";
 import CreateAccountScreen from "./apps/screens/CreateAccountScreen";
 import OnboardingScreen from "./apps/screens/OnboardingScreen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import ProfileDrawerNavigator from "./apps/navigation/ProfileDrawerNavigator";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,30 +53,32 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={initialRoute}>
-          <Stack.Screen
-            name="Onboarding"
-            component={OnboardingScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Register"
-            component={CreateAccountScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="HomeNavigator"
-            component={HomeNavigator}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName={initialRoute}>
+            <Stack.Screen
+              name="Onboarding"
+              component={OnboardingScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={CreateAccountScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="profileDrawer"
+              component={ProfileDrawerNavigator}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GestureHandlerRootView>
     </AuthProvider>
   );
 }

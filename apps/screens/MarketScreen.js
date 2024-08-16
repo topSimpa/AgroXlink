@@ -112,9 +112,11 @@ function MarketScreen() {
   return (
     <View style={styles.screen}>
       <Screen>
-        <MenuHeader image={require("../assets/Avatar.png")}>
-          <Brand color={primary.p900} />
-        </MenuHeader>
+        <MenuHeader
+          image={require("../assets/Avatar.png")}
+          color={primary.p900}
+          title={"AgroXlink"}
+        />
         <ScrollView contentContainerStyle={styles.scrollview}>
           <SearchBar
             placeholder={"Search farm produce"}

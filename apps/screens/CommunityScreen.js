@@ -33,7 +33,6 @@ import AddButton from "../components/AddButton";
 import ActivityPost from "../components/ActivityPost";
 import useAuth from "../auth/useAuth";
 
-
 function CommunityScreen() {
   const [show, setShow] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -89,11 +88,14 @@ function CommunityScreen() {
       {show && <ActivityPost onClose={toggleShow} />}
       <View style={styles.mainScreen}>
         <Screen>
-          <MenuHeader image={require("../assets/Avatar.png")}>
-            <Text style={{ color: neutral.n950, ...header.h4 }}>Community</Text>
-          </MenuHeader>
+          <MenuHeader
+            image={require("../assets/Avatar.png")}
+            color={neutral.n950}
+            title={"Community"}
+            navigation={navigation}
+          />
           <ScrollView contentContainerStyle={styles.scrollview}>
-            <SearchBar placeholder={"search"} field={'activity.userName'} onResults={onResults}/>
+            <SearchBar placeholder={"search"} field={"activity.userName"} />
             <View style={styles.feeds}>
               {posts.map((post) => {
                 const isLiked = post.likedBy.includes(user.id);

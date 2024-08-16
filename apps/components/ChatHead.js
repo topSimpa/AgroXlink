@@ -17,7 +17,7 @@ function ChatHead({ picture, owner, time, lastMessage }) {
           picture: picture,
           owner: owner,
         });
-      }}
+      }} 
     >
       <View style={styles.messageHeader}>
         <View style={styles.imageContainer}>
@@ -30,7 +30,9 @@ function ChatHead({ picture, owner, time, lastMessage }) {
               color: isClicked ? neutral.n400 : neutral.n950,
               marginTop: 4,
               ...body.p3b,
+              paddingRight: 16
             }}
+            numberOfLines={2}
           >
             {lastMessage}
           </Text>
@@ -47,15 +49,15 @@ const styles = StyleSheet.create({
   },
 
   latest: {
-    marginLeft: 8,
+    paddingHorizontal: 16,
   },
 
   messageHeader: {
+    paddingHorizontal: 16,
     alignItems: "center",
     borderBottomWidth: 1,
-    borderColor: neutral.n100,
+    borderBottomColor: neutral.n100,
     flexDirection: "row",
-    width: "100%",
     height: 92,
   },
 
