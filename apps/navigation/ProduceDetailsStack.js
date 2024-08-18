@@ -7,9 +7,11 @@ const Stack = createNativeStackNavigator();
 
 function ProduceDetailsStack() {
   return (
-    <Stack.Navigator screenOptions={{
-      headerShown: false
-    }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name="Home" component={MarketScreen} />
       <Stack.Screen name="produceDetail" component={ProductDetailsScreen} />
     </Stack.Navigator>

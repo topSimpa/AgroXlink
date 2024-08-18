@@ -39,7 +39,10 @@ function ProfileDrawer({ image }) {
         </View>
         <View style={styles.menu}>
           <View style={styles.menuBar}>
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("myAds")}
+            >
               <AdsLogo color={neutral.n950} />
               <Text style={styles.itemText}>My Ads</Text>
             </TouchableOpacity>

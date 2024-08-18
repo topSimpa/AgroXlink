@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Octicons from "@expo/vector-icons/Octicons";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import * as ImagePicker from "expo-image-picker";
 
 import BackButton from "../components/BackButton";
 import Screen from "../components/Screen";
@@ -27,19 +27,55 @@ const DOB = "31/11";
 const location = "Sabo-Shege Zaria";
 
 function ProfileScreen({ navigation }) {
+
   return (
     <Screen style={styles.screen}>
       <View style={styles.profileHeader}>
-        <ImageBackground style={styles.profileBackground}>
-          <BackButton onPress={() => navigation.goBack()} />
+        <ImageBackground
+          
+          source={require("../assets/pbackground.png")}
+          style={{
+            width: "100%",
+            height: 178,
+          }}
+        >
+          <BackButton
+            onPress={() => navigation.goBack()}
+            style={{
+              backgroundColor: "rgba(26, 28, 18, 0.6)",
+              borderRadius: 20,
+              marginTop: 16,
+            }}
+            color={neutral.white}
+          />
+          <View
+            style={{
+              width: 97,
+              height: 100,
+              position: "absolute",
+              top: 128,
+              left: 20,
+              borderWidth: 3,
+              borderBottomWidth: 0,
+              borderColor: "white",
+              borderRadius: 100,
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              source={require("../assets/person.png")}
+              style={{ width: "100%", height: "100%" }}
+            ></Image>
+          </View>
         </ImageBackground>
-        <Image style={styles.profilePics} />
         <View style={styles.editContainer}>
           <TouchableOpacity
             style={styles.editButton}
             onPress={() => navigation.navigate("editProfile")}
           >
-            <Text>Edit Profile</Text>
+            <Text style={{ color: primary.p900, ...label.l4b }}>
+              Edit Profile
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -105,6 +141,7 @@ const styles = StyleSheet.create({
 
   editButton: {
     marginRight: 17,
+    marginTop: 12,
     height: 28,
     borderColor: primary.p900,
     borderWidth: 1,

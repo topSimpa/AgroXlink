@@ -21,7 +21,7 @@ const body = StyleSheet.create({
   p1b: {
     ...p1,
     fontFamily,
-    fontWeight: "semi-bold",
+    fontWeight: "bold",
   },
   p2r: {
     ...p2,

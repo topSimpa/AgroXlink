@@ -10,6 +10,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import primary from "../config/colors/primaryColor";
 import neutral from "../config/colors/neutralColor";
@@ -20,7 +21,19 @@ function ProduceDetails({ image, name, farmName, price, unit }) {
   const [isSaved, setSaved] = useState(false);
   const [isEntered, setEntered] = useState(false);
   const handleClicked = () => setSaved(!isSaved);
-  const handleEnter = () => setEntered(!isEntered);
+  const handleEnter = () => {
+    setEntered(!isEntered);
+    navigation.navigate("produceDetail", {
+      image,
+      name,
+      farmName,
+      price,
+      unit,
+      isSaved,
+    });
+  };
+  const navigation = useNavigation();
+  
 
   return (
     <View style={styles.container}>

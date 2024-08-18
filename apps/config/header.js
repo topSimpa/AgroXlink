@@ -17,6 +17,11 @@ const header = StyleSheet.create({
     ...head,
     fontSize: 32,
   },
+
+  h30: {
+    ...head,
+    fontSize: 28,
+  },
   h3: {
     ...head,
     fontSize: 24,
@@ -25,6 +30,11 @@ const header = StyleSheet.create({
     ...head,
     fontSize: 18,
   },
+  h40: {
+    ...head,
+    fontSize: 16,
+  },
+
   h5: {
     ...head,
     fontSize: 14,

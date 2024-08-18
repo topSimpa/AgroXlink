@@ -7,6 +7,7 @@ import MycropsStackNavigator from "./MycropsStackNavigator";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EditProfileStackNavigator from "./EditProfileStackNavigator";
+import MyAdsStackNavigator from "./MyAdsStackNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -22,11 +23,9 @@ function ProfileDrawerNavigator({ navigation }) {
     >
       <Drawer.Screen name="mainScreen" component={HomeNavigator} />
       <Drawer.Screen name="mycrop" component={MycropsStackNavigator} />
+      <Drawer.Screen name="myAds" component={MyAdsStackNavigator} />
       <Drawer.Screen name="forgotPassword" component={ChangePasswordScreen} />
-      <Drawer.Screen
-        name="profile"
-        component={EditProfileStackNavigator}
-      />
+      <Drawer.Screen name="profile" component={EditProfileStackNavigator} />
     </Drawer.Navigator>
   );
 }

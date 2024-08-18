@@ -14,14 +14,14 @@ function EnterButton({ text, style, ...otherProps }) {
 }
 
 const styles = StyleSheet.create({
-	button: {
-		backgroundColor: primary.p900,
-		width: "100%",
-		height: 50,
-		borderRadius: 10,
-		alignItems: "center",
-		justifyContent: "center",
-	},
+  button: {
+    backgroundColor: primary.p900,
+    width: "100%",
+    height: 50,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default EnterButton;

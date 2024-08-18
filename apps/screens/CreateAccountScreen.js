@@ -74,6 +74,7 @@ function CreateAccountScreen({ navigation }) {
 
           <Formik
             initialValues={{
+              fullName: "",
               email: "",
               password: "",
               confirmPassword: "",
@@ -92,7 +93,13 @@ function CreateAccountScreen({ navigation }) {
             }) => (
               <>
                 <AppTextInput
+                  title={"FullName"}
+                  placeholder={"Enter your full name"}
+                  onChangeText={handleChange("fullName")}
+                />
+                <AppTextInput
                   title={"Email"}
+                  style={{ marginTop: 16 }}
                   placeholder={"Enter your email address"}
                   onChangeText={handleChange("email")}
                 />
