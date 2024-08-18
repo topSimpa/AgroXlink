@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { ImageBackground, ScrollView, StyleSheet, View } from "react-native";
+import {
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 
 import AppTextInput from "../components/AppTextInput";
 import EnterButton from "../components/EnterButton";
@@ -12,19 +19,56 @@ import ImageInput from "../components/ImageInput";
 function EditProfileScreen({ navigation }) {
   const [image, setImage] = useState(null);
   const [background, setBackground] = useState(null);
+  const [showOptions, setShowOptions] = useState(false);
+  const [currentSetter, setCurrentSetter] = useState(null);
 
-  const pickImage = async (imageSetter) => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  const requestPermissions = async () => {
+    const { status: mediaStatus } =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const { status: cameraStatus } =
+      await ImagePicker.requestCameraPermissionsAsync();
+    if (mediaStatus !== "granted" || cameraStatus !== "granted") {
+      alert(
+        "Sorry, we need media library and camera permissions to make this work!"
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const pickImage = async (useCamera = false) => {
+    if (!(await requestPermissions())) return;
+
+    let result;
+    if (useCamera) {
+      result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    } else {
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    }
 
     if (!result.canceled) {
-      imageSetter(result.assets[0].uri);
+      if (currentSetter === "background") {
+        setBackground(result.assets[0].uri);
+      } else if (currentSetter === "image") {
+        setImage(result.assets[0].uri);
+      }
+      setShowOptions(false);
     }
+  };
+
+  const openOptions = (setter) => {
+    setCurrentSetter(setter);
+    setShowOptions(true);
   };
 
   return (
@@ -44,7 +88,9 @@ function EditProfileScreen({ navigation }) {
               zIndex: 2,
             }}
           >
-            <ImageInput onPress={() => pickImage(setBackground)} />
+            <TouchableOpacity onPress={() => openOptions("background")}>
+              <ImageInput />
+            </TouchableOpacity>
 
             <View
               style={{
@@ -66,11 +112,37 @@ function EditProfileScreen({ navigation }) {
                 }
                 style={{ width: "100%", height: "100%" }}
               >
-                <ImageInput onPress={() => pickImage(setImage)} />
+                <TouchableOpacity onPress={() => openOptions("image")}>
+                  <ImageInput />
+                </TouchableOpacity>
               </ImageBackground>
             </View>
           </ImageBackground>
         </View>
+
+        {showOptions && (
+          <View style={styles.optionsContainer}>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => pickImage(false)}
+            >
+              <Text style={styles.optionText}>Choose from Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => pickImage(true)}
+            >
+              <Text style={styles.optionText}>Take a Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => setShowOptions(false)}
+            >
+              <Text style={styles.optionText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
         <View style={styles.form}>
           <AppTextInput title={"Name"} placeholder={"Abdulmujeeb Mohammed"} />
           <AppTextInput title={"Email"} placeholder={"dummy@domain.com"} />
@@ -96,9 +168,26 @@ const styles = StyleSheet.create({
     height: 228,
     overflow: "hidden",
   },
-
+  optionsContainer: {
+    margin: 16,
+    borderRadius: 8,
+    backgroundColor: "white",
+    padding: 16,
+    elevation: 4,
+  },
+  optionButton: {
+    padding: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 8,
+    marginVertical: 8,
+  },
+  optionText: {
+    fontSize: 16,
+    textAlign: "center",
+  },
   screen: {
     backgroundColor: neutral.background,
   },
 });
+
 export default EditProfileScreen;
