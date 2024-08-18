@@ -22,6 +22,14 @@ function AddSellScreen({ navigation }) {
     { label: "Stack", value: "stack" },
   ]);
 
+  const [on, setOn] = useState(false);
+  const [val, setVal] = useState(null);
+  const [cat, setCat] = useState([
+    { label: "One", value: "one" },
+    { label: "Two", value: "two" },
+    { label: "Three", value: "three" },
+  ]);
+
   return (
     <View style={styles.container}>
       <View style={styles.addPage}>
@@ -57,7 +65,22 @@ function AddSellScreen({ navigation }) {
             <AppTextInput title="Title" placeholder="Red Onion" />
             <AppTextInput title="Price" placeholder="169" />
 
-            <View style={styles.Catcontainer}>
+            <View>
+              <Text style={styles.title}>Category</Text>
+              <DropDownPicker
+                open={on}
+                value={val}
+                items={cat}
+                setOpen={setOn}
+                setValue={setVal}
+                setItems={setCat}
+                style={styles.dropDown}
+                placeholder="Cat"
+                placeholderStyle={styles.placeholder}
+                dropDownContainerStyle={styles.dropDownContainerStyle}
+              />
+            </View>
+            <View>
               <Text style={styles.title}>Quantity</Text>
               <DropDownPicker
                 open={open}
