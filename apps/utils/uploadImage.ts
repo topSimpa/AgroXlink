@@ -24,7 +24,7 @@ export const uploadImage = async (
 		}
 
 		// Create a reference to the storage location
-		const storageRef = ref(storage, `${directory}/${modelId}`);
+		const storageRef = ref(storage, `${directory}/${modelId}.jpg`);
 
 		// Upload the image as a blob
 		await uploadBytes(storageRef, blob);
