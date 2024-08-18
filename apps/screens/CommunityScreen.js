@@ -92,7 +92,6 @@ function CommunityScreen() {
             image={require("../assets/Avatar.png")}
             color={neutral.n950}
             title={"Community"}
-            navigation={navigation}
           />
           <ScrollView contentContainerStyle={styles.scrollview}>
             <SearchBar placeholder={"search"} field={"activity.userName"} />
