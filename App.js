@@ -6,6 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import useCustomFonts from "./apps/config/useFonts";
 import { AuthProvider } from "./apps/auth/context";
+import { UserProvider } from "./apps/user/context";
+
 import { auth } from "./apps/firebaseSetup";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -19,75 +21,77 @@ import ProfileDrawerNavigator from "./apps/navigation/ProfileDrawerNavigator";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const fontsLoaded = useCustomFonts();
-  const [user, setUser] = useState(null);
-  const [isReady, setIsReady] = useState(false);
-  const [initialRoute, setInitialRoute] = useState("Onboarding");
+	const fontsLoaded = useCustomFonts();
+	const [user, setUser] = useState(null);
+	const [isReady, setIsReady] = useState(false);
+	const [initialRoute, setInitialRoute] = useState("Onboarding");
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setIsReady(true);
-    });
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setUser(user);
+			setIsReady(true);
+		});
+		return unsubscribe;
+	}, []);
 
-  useEffect(() => {
-    const checkOnboarding = async () => {
-      const onboarded = await AsyncStorage.getItem("onboarded");
-      console.log("onboarded ->", onboarded);
-      console.log("user ->", user);
-      if (onboarded) {
-        setInitialRoute(user ? "HomeNavigator" : "Login");
-      } else {
-        setInitialRoute("Onboarding");
-      }
-    };
+	useEffect(() => {
+		const checkOnboarding = async () => {
+			const onboarded = await AsyncStorage.getItem("onboarded");
+			console.log("onboarded ->", onboarded);
+			console.log("user ->", user);
+			if (onboarded) {
+				setInitialRoute(user ? "HomeNavigator" : "Login");
+			} else {
+				setInitialRoute("Onboarding");
+			}
+		};
 
-    checkOnboarding();
-  }, []);
+		checkOnboarding();
+	}, []);
 
-  if (!isReady || !fontsLoaded) {
-    return null; // You can show a loading screen here if you prefer
-  }
+	if (!isReady || !fontsLoaded) {
+		return null; // You can show a loading screen here if you prefer
+	}
 
-  return (
-    <AuthProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName={initialRoute}>
-            <Stack.Screen
-              name="Onboarding"
-              component={OnboardingScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={CreateAccountScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="profileDrawer"
-              component={ProfileDrawerNavigator}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </GestureHandlerRootView>
-    </AuthProvider>
-  );
+	return (
+		<AuthProvider>
+			<UserProvider>
+				<GestureHandlerRootView style={{ flex: 1 }}>
+					<NavigationContainer>
+						<Stack.Navigator initialRouteName={initialRoute}>
+							<Stack.Screen
+								name="Onboarding"
+								component={OnboardingScreen}
+								options={{ headerShown: false }}
+							/>
+							<Stack.Screen
+								name="Login"
+								component={LoginScreen}
+								options={{ headerShown: false }}
+							/>
+							<Stack.Screen
+								name="Register"
+								component={CreateAccountScreen}
+								options={{ headerShown: false }}
+							/>
+							<Stack.Screen
+								name="profileDrawer"
+								component={ProfileDrawerNavigator}
+								options={{ headerShown: false }}
+							/>
+						</Stack.Navigator>
+					</NavigationContainer>
+				</GestureHandlerRootView>
+			</UserProvider>
+		</AuthProvider>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+		alignItems: "center",
+		justifyContent: "center",
+	},
 });

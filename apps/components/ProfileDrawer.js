@@ -17,11 +17,15 @@ import CropLogo from "../assets/croplogo.svg";
 
 import { signOut } from "firebase/auth";
 import { auth } from "../firebaseSetup";
+import { useUser } from "../user/context";
 
 const name = "Abdul Bayero";
 const email = "dummy@domain.com";
 
 function ProfileDrawer({ image }) {
+	const { state } = useUser(); // Access global user data from the context
+	const { userData } = state;
+
 	const navigation = useNavigation();
 	const handleLogout = async () => {
 		try {
@@ -34,20 +38,28 @@ function ProfileDrawer({ image }) {
 		}
 	};
 
+	const profilePicture = userData?.imageUrl
+		? { uri: userData.imageUrl }
+		: image;
+
 	return (
 		<Screen style={styles.drawer}>
 			<View style={styles.top}>
 				<View style={styles.drawerHeader}>
 					<TouchableOpacity onPress={() => navigation.navigate("profile")}>
 						<Image
-							source={image}
+							source={profilePicture}
 							style={{ height: 48, width: 48, borderRadius: 24 }}
 							resizeMode="cover"
 						/>
 					</TouchableOpacity>
 					<View style={styles.titleBox}>
-						<Text style={{ color: neutral.n950, ...header.h4 }}>{name}</Text>
-						<Text style={{ color: neutral.n500, ...label.l3r }}>{email}</Text>
+						<Text style={{ color: neutral.n950, ...header.h4 }}>
+							{userData?.name || "User Name"}
+						</Text>
+						<Text style={{ color: neutral.n500, ...label.l3r }}>
+							{userData?.email || "user@domain.com"}
+						</Text>
 					</View>
 					<View style={styles.through}></View>
 				</View>

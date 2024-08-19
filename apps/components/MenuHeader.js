@@ -1,6 +1,6 @@
 import { Image, View, StyleSheet, Button, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
@@ -10,29 +10,13 @@ import error from "../config/colors/error";
 import primary from "../config/colors/primaryColor";
 import { auth } from "../firebaseSetup";
 import useAuth from "../auth/useAuth";
+import { useUser } from "../user/context";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { UserService } from "../services/UserService";
 
 function MenuHeader({ color, title, image }) {
 	const { user } = useAuth();
 	const navigation = useNavigation();
-	const handleLogout = async () => {
-		try {
-			await signOut(auth);
-			console.log("User logged out successfully");
-
-			navigation.navigate("Login");
-		} catch (error) {
-			console.error("Error logging out:", error);
-		}
-	};
-
-	//   // // Temporary trigger to log out the user (for testing purposes)
-	//   useEffect(() => {
-	//     // Call the logout function here
-	//     if (user) {
-	//       handleLogout();
-	//     }
-	//   }, [user]);
 
 	return (
 		<View style={styles.headerContainer}>
