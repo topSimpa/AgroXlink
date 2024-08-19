@@ -95,3 +95,59 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 });
+
+// import React, { useState, useEffect } from "react";
+// import * as ImagePicker from "expo-image-picker";
+
+// import { StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { NavigationContainer } from "@react-navigation/native";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// import useCustomFonts from "./apps/config/useFonts";
+// import { AuthProvider } from "./apps/auth/context";
+// import { auth } from "./apps/firebaseSetup";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// import Screen from "./apps/components/Screen";
+// import HomeNavigator from "./apps/navigation/HomeNavigator";
+// import LoginScreen from "./apps/screens/LoginScreen";
+// import CreateAccountScreen from "./apps/screens/CreateAccountScreen";
+// import OnboardingScreen from "./apps/screens/OnboardingScreen";
+// import { GestureHandlerRootView } from "react-native-gesture-handler";
+// import ProfileDrawerNavigator from "./apps/navigation/ProfileDrawerNavigator";
+
+// export default function App() {
+//   const [imageUri, setImageUri] = useState();
+//   const requestPermission = async () => {
+//     const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+//     if (!granted) alert("You need to enable permission to access the library");
+//   };
+
+//   const selectImage = async () => {
+//     try {
+//       const result = await ImagePicker.launchImageLibraryAsync();
+//       if (!result.canceled) setImageUri(result.uri);
+//     } catch (error) {}
+//   };
+
+//   useEffect(async () => {
+//     requestPermission();
+//   }, []);
+
+//   return (
+//     <Screen
+//       style={{
+//         width: "100%",
+//         height: "100%",
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//     >
+//       <TouchableOpacity onPress={selectImage}>
+//         <Text>select</Text>
+//       </TouchableOpacity>
+//       <Image source={{ uri: imageUri }} />
+//     </Screen>
+//   );
+// }

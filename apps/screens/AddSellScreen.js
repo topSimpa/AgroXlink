@@ -4,6 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useState } from "react";
+import * as ImagePicker from "expo-image-picker";
 
 import neutral from "../config/colors/neutralColor";
 import body from "../config/body";
@@ -12,6 +13,7 @@ import AppTextInput from "../components/AppTextInput";
 import EnterButton from "../components/EnterButton";
 import header from "../config/header";
 import primary from "../config/colors/primaryColor";
+import ImageInput from "../components/ImageInput";
 
 function AddSellScreen({ navigation }) {
   const [open, setOpen] = useState(false);
@@ -29,6 +31,52 @@ function AddSellScreen({ navigation }) {
     { label: "Two", value: "two" },
     { label: "Three", value: "three" },
   ]);
+
+  const [image, setImage] = useState(null);
+
+  const requestPermissions = async () => {
+    const { status: mediaStatus } =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const { status: cameraStatus } =
+      await ImagePicker.requestCameraPermissionsAsync();
+    if (mediaStatus !== "granted" || cameraStatus !== "granted") {
+      alert(
+        "Sorry, we need media library and camera permissions to make this work!"
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const pickImage = async (useCamera = false) => {
+    if (!(await requestPermissions())) return;
+
+    let result;
+    if (useCamera) {
+      result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    } else {
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    }
+
+    if (!result.canceled) {
+      if (currentSetter === "background") {
+        setBackground(result.assets[0].uri);
+      } else if (currentSetter === "image") {
+        setImage(result.assets[0].uri);
+      }
+      setShowOptions(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -55,10 +103,16 @@ function AddSellScreen({ navigation }) {
               <Text style={styles.instruction}>Size should not exceed 5MB</Text>
             </View>
             <View style={styles.imageBox}>
-              <Image />
-              <TouchableOpacity style={styles.addImageButton}>
-                <FontAwesome6 name={"plus"} color={neutral.p900} size={20} />
-              </TouchableOpacity>
+              {image && <Image source={{ uri: image }} />}
+              <View style={styles.addImageButton}>
+                <ImageInput
+                  show={false}
+                  onPress={pickImage}
+                  style={{ backgroundColor: primary.p100 }}
+                >
+                  <FontAwesome6 name={"plus"} color={neutral.p900} size={20} />
+                </ImageInput>
+              </View>
             </View>
           </View>
           <View style={styles.form}>
