@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import useCustomFonts from "./apps/config/useFonts";
 import { AuthProvider } from "./apps/auth/context";
 import { UserProvider } from "./apps/user/context";
+import { ProductProvider } from "./apps/product/context";
 
 import { auth } from "./apps/firebaseSetup";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -56,32 +57,34 @@ export default function App() {
 	return (
 		<AuthProvider>
 			<UserProvider>
-				<GestureHandlerRootView style={{ flex: 1 }}>
-					<NavigationContainer>
-						<Stack.Navigator initialRouteName={initialRoute}>
-							<Stack.Screen
-								name="Onboarding"
-								component={OnboardingScreen}
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen
-								name="Login"
-								component={LoginScreen}
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen
-								name="Register"
-								component={CreateAccountScreen}
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen
-								name="profileDrawer"
-								component={ProfileDrawerNavigator}
-								options={{ headerShown: false }}
-							/>
-						</Stack.Navigator>
-					</NavigationContainer>
-				</GestureHandlerRootView>
+				<ProductProvider>
+					<GestureHandlerRootView style={{ flex: 1 }}>
+						<NavigationContainer>
+							<Stack.Navigator initialRouteName={initialRoute}>
+								<Stack.Screen
+									name="Onboarding"
+									component={OnboardingScreen}
+									options={{ headerShown: false }}
+								/>
+								<Stack.Screen
+									name="Login"
+									component={LoginScreen}
+									options={{ headerShown: false }}
+								/>
+								<Stack.Screen
+									name="Register"
+									component={CreateAccountScreen}
+									options={{ headerShown: false }}
+								/>
+								<Stack.Screen
+									name="profileDrawer"
+									component={ProfileDrawerNavigator}
+									options={{ headerShown: false }}
+								/>
+							</Stack.Navigator>
+						</NavigationContainer>
+					</GestureHandlerRootView>
+				</ProductProvider>
 			</UserProvider>
 		</AuthProvider>
 	);

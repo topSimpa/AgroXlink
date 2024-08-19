@@ -24,10 +24,14 @@ function AddCropScreen() {
 	const [value, setValue] = useState("");
 	const [cropName, setCropName] = useState("");
 	const [items, setItems] = useState([
-		{ label: "Cereals", value: "Cereals" },
-		{ label: "Vegetables", value: "Vegetables" },
-		{ label: "Legumes", value: "Legumes" },
-		{ label: "Fiber", value: "Fiber" },
+		{ label: "Beverages", value: "beverages" },
+		{ label: "Cereals", value: "cereals" },
+		{ label: "Fibres", value: "fibres" },
+		{ label: "Fruits", value: "fruits" },
+		{ label: "Legumes", value: "legumes" },
+		{ label: "Spices", value: "spices" },
+		{ label: "Tubers", value: "tubers" },
+		{ label: "Vegetables", value: "vegetables" },
 	]);
 
 	const handleAddCrop = async () => {

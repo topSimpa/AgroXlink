@@ -6,20 +6,20 @@ import ChatScreen from "../screens/ChatScreen";
 const Stack = createNativeStackNavigator();
 
 function MessageChatNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="MessageChats"
-        component={MessagesScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
-        options={{ presentation: "modal" }}
-      />
-    </Stack.Navigator>
-  );
+	return (
+		<Stack.Navigator>
+			<Stack.Screen
+				name="ChatScreen"
+				component={ChatScreen}
+				options={{ presentation: "modal" }}
+			/>
+			<Stack.Screen
+				name="MessageChats"
+				component={MessagesScreen}
+				options={{ headerShown: false }}
+			/>
+		</Stack.Navigator>
+	);
 }
 
 export default MessageChatNavigator;

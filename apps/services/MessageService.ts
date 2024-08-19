@@ -1,5 +1,3 @@
-// services/MessageService.ts
-
 import {
 	collection,
 	doc,
@@ -56,10 +54,6 @@ class MessageService {
 
 	async delete(id: string): Promise<void> {
 		const docRef = doc(this.collectionRef, id);
-		const docSnap = await getDoc(docRef);
-		if (!docSnap.exists()) {
-			throw new Error("Message does not exist");
-		}
 		await deleteDoc(docRef);
 	}
 }
