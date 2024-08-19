@@ -1,8 +1,10 @@
 import React from "react";
 import { FlatList, View } from "react-native";
 
+
 import CropItems from "./CropItems";
 import neutral from "../config/colors/neutralColor";
+
 
 data = ["Tomatoes", "Red Onions", "Cabbages"];
 

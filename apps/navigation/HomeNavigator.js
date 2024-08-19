@@ -12,6 +12,8 @@ import Messages from "../assets/message.svg";
 import People from "../assets/people.svg";
 import MessageChatNavigator from "./MessageChatNavigator";
 import ProduceDetailsStack from "./ProduceDetailsStack";
+import CropCareNavigator from "./CropCareNavigator";
+import CareStackNavigator from "./CareStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +47,7 @@ function HomeNavigator({ navigation }) {
       />
       <Tab.Screen
         name="Crop Care"
-        component={CropCareScreen}
+        component={CareStackNavigator}
         options={{
           tabBarIcon: ({ size, color }) => (
             <CropCare width={size} height={size} color={color} />
