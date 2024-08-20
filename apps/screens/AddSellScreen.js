@@ -153,7 +153,14 @@ function AddSellScreen({ navigation }) {
 							<Text style={styles.instruction}>Size should not exceed 5MB</Text>
 						</View>
 						<View style={styles.imageBox}>
-							{image && <Image source={{ uri: image }} />}
+							<View style={styles.productImage}>
+								{image && (
+									<Image
+										source={{ uri: image }}
+										style={{ width: "100%", height: "100%" }}
+									/>
+								)}
+							</View>
 							<View style={styles.addImageButton}>
 								<ImageInput
 									show={false}
@@ -252,13 +259,12 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-
 	addPage: {
 		position: "absolute",
 		bottom: 0,
-		height: "80%",
+		height: "90%",
 		backgroundColor: neutral.background,
-		borderTopLeftRadius: 10,	
+		borderTopLeftRadius: 10,
 		borderTopRightRadius: 10,
 		paddingBottom: 52,
 		paddingTop: 20,
@@ -269,7 +275,6 @@ const styles = StyleSheet.create({
 		color: neutral.n700,
 		...label.l2r,
 	},
-
 	container: {
 		width: "100%",
 		height: "100%",
@@ -322,6 +327,12 @@ const styles = StyleSheet.create({
 		marginBottom: 4,
 		color: neutral.n950,
 		...label.l3b,
+	},
+
+	productImage: {
+		width: 50,
+		height: 50,
+		overflow: "hidden",
 	},
 });
 
