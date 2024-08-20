@@ -1,8 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CareHomeScreen from "../screens/CareHomeScreen";
 import AssistanceScreen from "../screens/AssistanceScreen";
-import CropCareNavigator from "./CropCareNavigator";
 import CropCareScreen from "../screens/CropCareScreen";
 
 const Stack = createNativeStackNavigator();

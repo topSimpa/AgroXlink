@@ -9,7 +9,7 @@ import neutral from "../config/colors/neutralColor";
 import label from "../config/label";
 import CropCareNavigator from "../navigation/CropCareNavigator";
 
-function CropCareScreen() {
+function CropCareScreen({ navigation }) {
   const [clicked, setClicked] = useState(1);
 
   const isClicked = (button) => {
@@ -19,7 +19,7 @@ function CropCareScreen() {
   return (
     <View style={{ backgroundColor: neutral.background }}>
       <Screen>
-        <ScreenHeader title={"Crop Care"} />
+        <ScreenHeader title={"Crop Care"} onPress={() => navigation.goBack()} />
         <CropCareNavigator />
       </Screen>
     </View>

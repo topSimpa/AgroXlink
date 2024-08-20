@@ -6,7 +6,7 @@ import primary from "../config/colors/primaryColor";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Markdown from "react-native-markdown-display";
 
-const TypingText = ({ text, speed = 100 }) => {
+const TypingText = ({ text, speed = 100, style }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const containerWidth = useRef(Dimensions.get("window").width * 0.8).current; // Adjust width as needed
@@ -23,7 +23,7 @@ const TypingText = ({ text, speed = 100 }) => {
   }, [currentCharIndex, text, speed]);
 
   return (
-    <View style={[styles.container, { width: "78%" }]}>
+    <View style={[styles.container, { width: "78%" }, style]}>
       <MaterialCommunityIcons
         name="robot-love"
         color={primary.p950}
