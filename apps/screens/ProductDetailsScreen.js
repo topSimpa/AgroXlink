@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	FlatList,
 	Image,
@@ -20,11 +20,17 @@ import primary from "../config/colors/primaryColor";
 import header from "../config/header";
 import body from "../config/body";
 import label from "../config/label";
+import { useProduct } from "../product/context";
+import { useUser } from "../user/context";
+import ChatService from "../services/ChatService";
 
 function ProductDetailsScreen({ route, navigation }) {
 	const description =
 		"Discover the rich, earthly flavor of our fresh I rish Potatoes, harvested directly from local farms to your table. These versatile... Read more";
 	const reviewCount = 10;
+	const { state, dispatch } = useProduct();
+	const { productData: product, productOwner } = state;
+
 	const [show, setShow] = useState(2);
 	const reviews = [
 		{
@@ -47,6 +53,26 @@ function ProductDetailsScreen({ route, navigation }) {
 			star: 5,
 		},
 	];
+
+	const chatService = new ChatService();
+
+	const handleMessageSeller = async (productOwner) => {
+		const chat = await chatService.getOrCreateChat(
+			currentUserId,
+			productOwnerId
+		);
+		navigation.navigate("ChatScreen", {
+			chatId: chat.id,
+			ownerName: productOwner?.userName, // Use owner name
+			ownerPicture: productOwner?.userPicture, // Use
+		});
+	};
+
+	useEffect(() => {
+		if (product) {
+			dispatch({ type: "SET_OWNER", payload: productOwner }); // Ensure owner is set
+		}
+	}, [product, dispatch, productOwner]);
 
 	return (
 		<Screen>
@@ -159,7 +185,7 @@ function ProductDetailsScreen({ route, navigation }) {
 			<View style={{ marginHorizontal: 16 }}>
 				<EnterButton
 					text="Message Seller"
-					onPress={() => navigation.navigate("ChatScreen")}
+					onPress={() => handleMessageSeller(productOwner)}
 				/>
 			</View>
 		</Screen>
