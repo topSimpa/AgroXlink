@@ -29,7 +29,7 @@ function PostItems({
 				<View style={styles.headerDetails}>
 					<View style={styles.profilePics}>
 						<Image
-							resizeMode={"contain"}
+							// resizeMode={"contain"}
 							source={profilePics}
 							style={{ width: "100%", height: "100%" }}
 						/>
