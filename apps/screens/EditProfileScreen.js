@@ -17,6 +17,9 @@ import neutral from "../config/colors/neutralColor";
 import ImageInput from "../components/ImageInput";
 import { uploadImage } from "../utils/uploadImage";
 import { useUser } from "../user/context";
+import { UserService } from "../services/UserService";
+
+const userService = new UserService();
 
 function EditProfileScreen({ navigation }) {
 	const { state, dispatch } = useUser(); // Access global user data and dispatch from the context
@@ -105,7 +108,7 @@ function EditProfileScreen({ navigation }) {
 				);
 			}
 
-			// Update user data globally
+			// Update user data to be sent to backend
 			const updatedUserData = {
 				name,
 				email,
@@ -119,6 +122,9 @@ function EditProfileScreen({ navigation }) {
 				imageUrl,
 				backgroundUrl,
 			};
+
+			// Use UserService to update user in the backend
+			await userService.update(userData.id, updatedUserData);
 
 			// Dispatch action to update user data globally
 			dispatch({ type: "SET_USER", payload: updatedUserData });

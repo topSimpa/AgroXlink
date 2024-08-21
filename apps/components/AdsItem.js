@@ -19,7 +19,11 @@ function AdsItem({
 		<View style={styles.ItemBox}>
 			<View style={styles.nameBox}>
 				<View style={{ width: 74, height: 74 }}>
-					<Image style={{ width: 50, height: 74 }} source={{ uri: imageUrl }} />
+					{/* <Image style={{ width: 50, height: 74 }} source={{ uri: imageUrl }} /> */}
+					<Image
+						style={{ width: 50, height: 74 }}
+						source={require("../assets/Avatar.png")}
+					/>
 				</View>
 				<View style={styles.textBox}>
 					<Text style={{ color: neutral.n950, ...label.l2b }}>{name}</Text>

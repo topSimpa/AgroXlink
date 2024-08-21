@@ -1,85 +1,141 @@
-import React from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
+	FlatList,
+	TextInput,
+	Button,
+	View,
+	Text,
+	Image,
+	StyleSheet,
 } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import MessageService from "../services/MessageService";
+import { useRoute } from "@react-navigation/native";
+import useAuth from "../auth/useAuth";
 
-import neutral from "../config/colors/neutralColor";
-import label from "../config/label";
-import Screen from "../components/Screen";
-import Message from "../components/Message";
+const ChatScreen = ({ navigation }) => {
+	const { user } = useAuth();
+	const route = useRoute();
+	const { chatId, receiverName, receiverImageUrl } = route.params;
 
-messages = [
-  {
-    messageId: "1",
-    who: "owner",
-    text: "How far anything for my farm, I see say you buy manure",
-  },
-  {
-    messageId: "2",
-    who: "pair",
-    text: "Omoh na FG come share am for my community yesterday",
-  },
-];
+	const [messages, setMessages] = useState([]);
+	const [text, setText] = useState("");
 
-function ChatScreen({ route, navigation }) {
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: (props) => (
-        <View style={{ flexDirection: "row" }}>
-          <Image source={route.params?.picture} />
-          <Text style={{ color: neutral.n950, ...label.l2b, marginLeft: 12 }}>
-            {route.params?.owner}
-          </Text>
-        </View>
-      ),
-      headerStyle: {
-        backgroundColor: neutral.background,
-        height: 68,
-      },
-    });
-  }, [navigation, route.params]);
+	useEffect(() => {
+		const unsubscribe = MessageService.onMessageSnapshot(chatId, setMessages);
+		return () => unsubscribe();
+	}, [chatId]);
 
-  return (
-    <Screen style={{ backgroundColor: neutral.background, flex: 1 }}>
-      <FlatList
-        data={messages}
-        keyExtractor={(message) => message.messageId}
-        renderItem={({ item }) => <Message who={item.who} text={item.text} />}
-        bounces={false}
-        style={{ width: "100%" }}
-      />
-      <View style={styles.inputContainer}>
-        <Ionicons name="attach" size={20} color={neutral.n400} />
-        <TextInput style={styles.input} placeholder="Type message..." />
-      </View>
-    </Screen>
-  );
-}
+	const handleSend = async () => {
+		if (text.trim()) {
+			await MessageService.sendMessage(chatId, {
+				text,
+				senderId: user.id,
+				receiverId: "", // Set receiver's ID
+				status: "sent",
+			});
+			setText("");
+		}
+	};
+
+	const renderMessage = ({ item }) => (
+		<View
+			style={
+				item.senderId === user.id ? styles.sentMessage : styles.receivedMessage
+			}
+		>
+			<Text>{item.text}</Text>
+		</View>
+	);
+
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			headerTitle: () => (
+				<View style={styles.headerTitle}>
+					<Image
+						source={{
+							uri:
+								receiverImageUrl ||
+								"https://www.justwatch.com/images/icon/285104543/s166/chelsea-fc.png",
+						}}
+						style={styles.receiverImage}
+					/>
+					<Text style={styles.receiverName}>{receiverName || "Unknown"}</Text>
+				</View>
+			),
+		});
+	}, [navigation, receiverName, receiverImageUrl]);
+
+	return (
+		<View style={styles.container}>
+			<FlatList
+				data={messages}
+				renderItem={renderMessage}
+				keyExtractor={(item) => item.id}
+				contentContainerStyle={styles.messageList}
+			/>
+			<View style={styles.inputContainer}>
+				<TextInput
+					value={text}
+					onChangeText={setText}
+					placeholder="Type a message..."
+					style={styles.input}
+				/>
+				<Button title="Send" onPress={handleSend} />
+			</View>
+		</View>
+	);
+};
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    alignSelf: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    width: "92%",
-    borderColor: neutral.n100,
-    borderWidth: 1,
-    borderRadius: 10,
-    position: "absolute",
-    bottom: 32,
-    padding: 12,
-  },
-
-  input: {
-    marginHorizontal: 4,
-    color: neutral.n400,
-  },
+	container: {
+		flex: 1,
+		justifyContent: "space-between",
+	},
+	messageList: {
+		padding: 16,
+	},
+	sentMessage: {
+		alignSelf: "flex-end",
+		backgroundColor: "#DCF8C6",
+		padding: 10,
+		borderRadius: 5,
+		marginVertical: 5,
+	},
+	receivedMessage: {
+		alignSelf: "flex-start",
+		backgroundColor: "#FFF",
+		padding: 10,
+		borderRadius: 5,
+		marginVertical: 5,
+	},
+	inputContainer: {
+		flexDirection: "row",
+		padding: 8,
+		borderTopWidth: 1,
+		borderColor: "#ddd",
+	},
+	input: {
+		flex: 1,
+		borderWidth: 1,
+		borderColor: "#ddd",
+		borderRadius: 5,
+		padding: 10,
+		marginRight: 8,
+	},
+	headerTitle: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	receiverImage: {
+		width: 40,
+		height: 40,
+		borderRadius: 20,
+		marginRight: 10,
+	},
+	receiverName: {
+		fontSize: 18,
+		fontWeight: "bold",
+	},
 });
 
 export default ChatScreen;

@@ -10,19 +10,25 @@ import error from "../config/colors/error";
 import primary from "../config/colors/primaryColor";
 import { auth } from "../firebaseSetup";
 import useAuth from "../auth/useAuth";
-import { useUser } from "../user/context";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserService } from "../services/UserService";
+import { useUser } from "../user/context";
 
 function MenuHeader({ color, title, image }) {
-	const { user } = useAuth();
+	const { state } = useUser(); // Access global user data from the context
+	const { userData } = state;
 	const navigation = useNavigation();
+
+	const profilePicture = userData?.imageUrl
+		? { uri: userData.imageUrl }
+		: image;
 
 	return (
 		<View style={styles.headerContainer}>
 			<View style={styles.header}>
 				<TouchableOpacity onPress={() => navigation.openDrawer()}>
-					<Image source={image} />
+					<Image source={profilePicture} style={{ height: 40, width: 40, borderRadius: 24 }}
+							resizeMode="cover"/>
 				</TouchableOpacity>
 				<View style={StyleSheet.nameContainer}>
 					<Text style={{ color: color, ...header.h4 }}>{title}</Text>

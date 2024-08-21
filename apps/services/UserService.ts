@@ -39,7 +39,9 @@ class UserService {
 		const docSnap = await getDoc(docRef);
 		if (docSnap.exists()) {
 			return { id: docSnap.id, ...(docSnap.data() as User) };
+			console.log("User gotten successfully");
 		} else {
+			console.log("error");
 			return null;
 		}
 	}

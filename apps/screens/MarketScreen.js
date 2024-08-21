@@ -119,6 +119,7 @@ function MarketScreen() {
 									price={prod.price}
 									unit={prod.quantity}
 									image={prod.imageUrl}
+									owner={prod.userId}
 								/>
 							))}
 						</View>

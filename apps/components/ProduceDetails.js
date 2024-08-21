@@ -16,34 +16,33 @@ import primary from "../config/colors/primaryColor";
 import neutral from "../config/colors/neutralColor";
 import body from "../config/body";
 import header from "../config/header";
-import { useProduct } from "../product/context";
+// import { useProduct } from "../product/context";
 
-function ProduceDetails({ image, name, farmName, price, unit }) {
+function ProduceDetails({ image, name, farmName, price, owner, unit }) {
 	const navigation = useNavigation();
-	const { state, dispatch } = useProduct();
-	const { productData, isSaved } = state;
-
-	const handleClicked = () => {
-		dispatch({ type: "TOGGLE_SAVE" });
-	};
+	const [isSaved, setSaved] = useState(false);
+	const [isEntered, setEntered] = useState(false);
+	const handleClicked = () => setSaved(!isSaved);
 
 	const handleEnter = () => {
+		setEntered(!isEntered);
 		navigation.navigate("produceDetail", {
 			image,
 			name,
-			price,
 			farmName,
+			price,
 			unit,
+			owner,
 			isSaved,
 		});
 	};
 
-	useEffect(() => {
-		dispatch({
-			type: "SET_PRODUCT",
-			payload: { image, name, farmName, price, unit },
-		});
-	}, [image, name, farmName, price, unit, dispatch]);
+	// useEffect(() => {
+	// 	dispatch({
+	// 		type: "SET_PRODUCT",
+	// 		payload: { image, name, farmName, price, unit, owner },
+	// 	});
+	// }, [image, name, farmName, price, unit, owner, dispatch]);
 
 	return (
 		<View style={styles.container}>

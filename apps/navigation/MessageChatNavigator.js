@@ -9,15 +9,11 @@ function MessageChatNavigator() {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen
-				name="ChatScreen"
-				component={ChatScreen}
-				options={{ presentation: "modal" }}
-			/>
-			<Stack.Screen
 				name="MessageChats"
 				component={MessagesScreen}
 				options={{ headerShown: false }}
 			/>
+			<Stack.Screen name="ChatScreen" component={ChatScreen} />
 		</Stack.Navigator>
 	);
 }
