@@ -61,35 +61,5 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-  // menu: {
-  //   position: "absolute",
-  //   left: 16,
-  //   top: 0,
-  //   gap: 4,
-  //   height: 78,
-  //   width: "100%",
-  //   justifyContent: "flex-end",
-  // },
-
-  // optionContainer: {
-  //   width: "100%",
-  //   flexDirection: "row",
-  //   padding: 8,
-  //   borderRadius: 16,
-  //   backgroundColor: primary.p50,
-  //   justifyContent: "space-around",
-  // },
-
-  // option: {
-  //   flexDirection: "column",
-  //   height: 36,
-  //   borderRadius: 8,
-  //   alignItems: "center",
-  //   gap: 8,
-  //   paddingHorizontal: 8,
-  //   justifyContent: "center",
-  //   ...label.l3b,
-  //   lineHeight: 36,
-  // },
 });
 export default CropCareScreen;
