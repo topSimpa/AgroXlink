@@ -10,7 +10,7 @@
   import { UserService } from "./UserService";
   import { auth } from "../firebaseSetup";
 
-  class AuthService {
+  export class AuthService {
     private userModel: UserService;
 
     constructor() {

@@ -1,19 +1,9 @@
-import { Timestamp } from "firebase/firestore";
-
 export interface Review {
-  id?: string;
-  userId: string | void;       // User or product being reviewed
-  reviewerId: string | void;   // User who is reviewing
-  rating: number;
-  comment: string;
-  dateCreated?: Timestamp;
-  dateUpdated?: Timestamp;
-}
-
-export interface ProductReview extends Review {
-  productId: string;    // Specific to product reviews
-}
-
-export interface UserReview extends Review {
-  reviewedUserId: string;  // Specific to user reviews
+	id: string; // Unique identifier for the review
+	productId: string; // ID of the product being reviewed
+	userId: string; // ID of the user who wrote the review
+	rating: number; // Rating given by the user (e.g., 1 to 5 stars)
+	text: string; // Content of the review
+	dateCreated: Date; // Timestamp when the review was created
+	dateUpdated?: Date; // Timestamp when the review was last updated (optional)
 }

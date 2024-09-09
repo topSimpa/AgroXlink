@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@firebase/rules-unit-testing": "^3.0.4",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/drawer": "^6.7.2",
@@ -48,7 +49,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.14.12",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
     "react-native-svg-transformer": "^1.5.0",
     "typescript": "^5.5.4"
   },
